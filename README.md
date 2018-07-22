@@ -16,7 +16,7 @@ Foo : {
 	bar1 : true
 	bar2 : "string"
 
-	// constructor
+	// constructor with default arguments
 	(b0 = 0, b1 = false, b2 = ""){
 		this.bar0 = b0
 		this.bar1 = b1
