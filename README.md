@@ -9,7 +9,7 @@ SpringScript是一个面向对象的（基于原型链，与JavaScript类似）�
 下面的代码演示了如何定义一个名为“Foo”的类（实际上它也是一个对象），以及它的构造函数和运算符重载函数。
 语法说明文档正在写作中。
 
-``` c++
+``` java
 Foo : {
 	// public attributes
 	bar0 : 1
