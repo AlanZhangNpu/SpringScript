@@ -17,7 +17,7 @@ Foo : {
 	bar2 : "string"
 
 	// constructor
-	(b0, b1, b2){
+	(b0 = 0, b1 = false, b2 = ""){
 		this.bar0 = b0
 		this.bar1 = b1
 		this.bar2 = b2
@@ -30,6 +30,9 @@ Foo : {
 		return this
 	}
 }
+f0 : new Foo(0, false, "abc")
+f1 : new Foo(1)
+f0 += f1
 ```
 
 ## SpringStudio
