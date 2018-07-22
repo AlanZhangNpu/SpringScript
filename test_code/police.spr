@@ -1,0 +1,10 @@
+let i, largeNum
+
+largeNum = 20000
+i = 0
+loop largeNum{
+	a : [9] * 100
+	if i % 2000 == 0
+		print(i)
+	i++
+}

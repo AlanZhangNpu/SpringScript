@@ -1,0 +1,39 @@
+
+a : [0,1,2,3];
+b = length(a);
+print(b);
+
+
+print(clock);
+
+a = randn(10, 10);
+
+time = clock();
+c:  a * a;
+print(clock() - time);
+
+
+a = randn(4, 4);
+print(a);
+
+inva = inv(a);
+print(inva);
+
+b = randn(4, 2);
+bb = randn(2, 4);
+c = a + b;
+d = a * bb;
+
+print(a);
+print(b);
+print(c);
+print(d);
+
+
+
+
+
+
+
+
+

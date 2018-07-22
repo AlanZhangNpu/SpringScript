@@ -1,0 +1,25 @@
+kill : [0] * 41
+
+killNum : 1
+pos : -1
+while killNum <= 41{
+	
+	count : 0
+	while count <3 {
+		pos++
+		
+		if kill[pos] == 0 
+			count++ 
+	}
+	kill[pos] = killNum
+	killNum++
+}
+
+print(kill)
+
+
+loop 10{
+	i : 0
+	print(++i)
+}
+//clear()
