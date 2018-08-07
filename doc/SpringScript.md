@@ -12,9 +12,20 @@ SpringScript是动态语言和动态数据类型语言，所以其开发效率�
 SpringScript是面向对象的脚本语言，但其语法中并没有类的概念，也不使用类来创建对象。SpringScript是基于原型（prototype）的，而不是基于类的面向对象语言，具有封装、继承和多态三大面向对象的基本特征，也支持运算符重载等复杂概念。为了简单起见，SpringScript只支持单继承。
 #### (4) 与C/C++深度交互
 SpringScript解释器有两种使用方式。首先，SpringScript解释器可作为一个独立的程序，解释执行SpringScript源代码文件。其次，SpringScript解释器还可作为一个C++库，嵌入到其他C++程序中（这个C++程序称为宿主程序）。宿主程序可通过SpringScript解释器调用SpringScript代码和读写SpringScript变量的值；宿主程序还可以将自身的C/C++函数注册至SpringScript解释器，以便在SpringScript程序中调用。  
-![image](https://github.com/AlanZhangNpu/SpringScript/blob/master/screenshots/interaction.jpg)
+    ![image](https://github.com/AlanZhangNpu/SpringScript/blob/master/screenshots/interaction.jpg)  
+SpringScript可应用于以下场景：
+#### (1) 作为程序设计入门语言
+SpringScript是一种轻量级、语法简洁但完整的脚本语言，学习门槛低，适合程序设计的初学者作为入门语言学习。
+#### (2) 快速开发软件原型与算法验证程序
+对于熟练的开发者，SpringScript的动态数据类型、开发高效性、多种编程范式以及与C/C++的深度交互能力，可帮助开发者快速开发软件原型或算法验证程序。
+#### (3) 用做软件配置解析器
+用SpringScript编写配置数据文件，利用SpringScript解释器进行解析，使用户免于手动开发配置解析程序。
+#### (4) 开发支持脚本驱动的软件
+将SpringScript解释器嵌入到第三方软件中，并将软件内的部分函数暴露给SpringScript解释器，让自己软件的用户可使用SpringScript对自己的软件进行二次开发。
+#### (5) 开发支持热更新的软件
+将软件项目中需求变动大的模块用SpringScript编写，软件更新时，只需替换SpringScript文件，避免重新编译，甚至在软件不重启的情况下更新软件。
 ## **2 SpringScript IDE (SpringStudio)简介**
-
+TODO
 ## **2 SpringScript基础语法**
 SpringScript的语法与C++、Java有许多相似之处，但也有很多差异。
 ### **2.1 第一个SpringScript程序**
@@ -78,8 +89,7 @@ PI = 3.2 // 运行到此处时，解释器将抛出错误：[Line3, Runtime erro
 |false|func|class|new|
 ### **2.5 语句和语句块**
 #### **2.5.1 语句中的分号可省略**
-SpringScript语句必须用分号或回车符结尾。
-与C/C++或Java不同，SpringScript语句末尾的分号不是必需的，但省略分号后，语句必须以回车符结尾。
+SpringScript语句必须用分号或回车符结尾。与C/C++或Java不同，SpringScript语句末尾的分号不是必需的，但如果省略分号，语句必须以回车符结尾。
 ``` Java
 a = 1
 b = 2
@@ -92,7 +102,6 @@ b = 2;
 c = a + b;
 ```
 以上两种语句结尾方式是等价的。（注意：在第一种省略分号的结尾方式中，第三行的末尾要输入至少一个回车符。）
-
 #### **2.5.2 在一行中编写多条语句**
 使用分号可在一行中编写多条语句
 ``` Java
@@ -106,17 +115,64 @@ item_two + \
 item_three
 
 ```
+## **3 SpringScript数据类型和变量**
+### **3.1 SpringScript数据类型**
+SpringScript的基本数据类型有8种，如下表所示。
+|数据类型|描述|
+|:--|:--|
+|nil|表示空值或无效值|
+|boolean|表示布尔类型，包含两个值：true与false|
+|int|表示整数类型|
+|double|表示双精度实浮点数|
+|string|字符串类型，由双引号表示|
+|function|由SpringScript或C/C++编写的函数|
+|list|链表类型，链表内的元素可以是任意数据类型|
+|object|SpringScript对象类型|
+解释器内置的type函数可用来测试一个变量或值的数据类型。
+``` Java
+print(type(nil))
+print(type(false))
+print(type(1))
+print(type(2.7))
+print(type("hello"))
+print(type(type))
+print(type([0, 1.1, "spring"]))
+print(type({
+    a : 0
+    b : false
+}))
 
-## **SpringScript变量**
-### 变量声明
-### 变量赋值
+```
+运行以上的程序，控制台将输出：
+``` Java
+nil
+boolean
+int 
+double
+string
+function
+list
+object
+```
+#### **数据类型转换**
+##### 隐式类型转换
+bool <-> int <-> double
+##### 显式类型转换
+类型转换函数
+
+
+### **3.2 SpringScript变量**
+#### **变量声明与初始化**
+#### **变量赋值**
 ``` Java
 a : 1 // 声明一个变量a，并将其值初始化为1
 PI : 3.14 // 声明一个常量PI，并将其值初始化为3.14
 a = 2 // 正确，a的值将会变为2
 PI = 3.14 // 错误，解释器将抛出：[Line4, Runtime error] A constant cannot be changed after initialization.
 ```
-### 多变量赋值
+#### **多变量赋值**
+#### **变量作用域**
+
 ### 数据类型
 #### 基本数据类型
 bool
@@ -129,11 +185,7 @@ list
 dictionary
 object
 
-### 数据类型转换
-#### 隐式类型转换
-bool <-> int <-> double
-#### 显式类型转换
-类型转换函数
+
 
 ## **SpringScript运算符**
 
