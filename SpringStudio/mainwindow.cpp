@@ -230,14 +230,6 @@ bool MainWindow::saveCodeFile(QString &codePath, QString &error)
     return true;
 }
 
-void MainWindow::onTextChanged()
-{
-//    ui->statusBar->clearMessage();
-
-//    Global::clearBreakPoints();
-//    editor->markerDeleteAll();
-}
-
 void MainWindow::onLinesChanged()
 {
     editor->setMarginWidth(0, QString::number(editor->lines()*10));
@@ -743,33 +735,7 @@ void MainWindow::input(std::string tip, std::string &inputStr)
     inputStr = text.toStdString();
 }
 
-void MainWindow::on_lineEdit_cmd_returnPressed()
-{
-    if(programState != PROGRAM_STATE_EDIT)
-        return;
-
-    QString cmd = ui->lineEdit_cmd->text().trimmed();
-    if(cmd.isEmpty())
-        return;
-
-    if(!cmd.endsWith(";"))
-        cmd += ";";
-
-    ui->lineEdit_cmd->clear();
-    printMsg(">>" + cmd);
-
-    QString tempFile = QDir::tempPath();
-    if(!tempFile.endsWith("\\") && !tempFile.endsWith("/"))
-        tempFile += "/";
-    tempFile += "cmd.sp";
-
-    FileUtils::toFile(tempFile, cmd);
-    runtimeController->start();
-    th = new SpringInterpreterThread(this, tempFile, springInterpreter);
-    QThreadPool::globalInstance()->start(th);
-}
-
 void MainWindow::on_action_open_cmd_triggered()
 {
-    ui->lineEdit_cmd->setFocus();
+//    ui->lineEdit_cmd->setFocus();
 }

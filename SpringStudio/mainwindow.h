@@ -43,9 +43,6 @@ private slots:
     //! 响应双击文件事件
     void onFileListDClicked(QModelIndex i);
 
-    //! 响应文本变化
-    void onTextChanged();
-
     //! 响应编辑器行数变化，需根据行数修改测百年宽度
     void onLinesChanged();
 
@@ -107,8 +104,6 @@ private slots:
     void onZoomOutOutputWindow();
 
     void input(std::string tip, std::string & inputStr);
-
-    void on_lineEdit_cmd_returnPressed();
 
     void on_action_open_cmd_triggered();
 
