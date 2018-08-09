@@ -11,7 +11,7 @@ SpringScript是动态语言和动态数据类型语言，所以其开发效率�
 #### (3) 面向对象
 SpringScript是面向对象的脚本语言，但其语法中并没有类的概念，也不使用类来创建对象。SpringScript是基于原型（prototype）的，而不是基于类的面向对象语言，具有封装、继承和多态三大面向对象的基本特征，也支持运算符重载等复杂概念。为了简单起见，SpringScript只支持单继承。
 #### (4) 与C/C++深度交互
-SpringScript解释器有两种使用方式。首先，SpringScript解释器可作为一个独立的程序，解释执行SpringScript源代码文件。其次，SpringScript解释器还可作为一个C++库，嵌入到其他C++程序中（这个C++程序称为宿主程序）。宿主程序可通过SpringScript解释器调用SpringScript代码和读写SpringScript变量的值；宿主程序还可以将自身的C/C++函数注册至SpringScript解释器，以便在SpringScript程序中调用。  
+SpringScript解释器有两种使用方式。首先，SpringScript解释器可作为一个独立的程序，解释执行SpringScript源代码文件。其次，SpringScript解释器还可作为一个C++库，嵌入到其他C++程序中（这个C++程序称为宿主程序）。宿主程序可通过SpringScript解释器调用SpringScript代码和读写SpringScript变量的值；宿主程序还可以将自身的C/C++函数注册至SpringScript解释器，以便在SpringScript程序中调用。SpringScript解释器作为一个C++库，是可重入的，即解释器程序没有任何全局变量或静态变量，所以一个宿主程序甚至可以持有多个SpringScript解释器实例。
     ![image](https://github.com/AlanZhangNpu/SpringScript/blob/master/screenshots/interaction.jpg)  
 SpringScript可应用于以下场景：
 #### (1) 作为程序设计入门语言
@@ -117,10 +117,10 @@ item_three
 ```
 ## **3 SpringScript数据类型和变量**
 ### **3.1 SpringScript数据类型**
-SpringScript的基本数据类型有8种，如下表所示。
+SpringScript的基本数据类型有8种，如下表所示。SpringScript中的所有值都是第一类值（包括function类型的值），即所有值都可以存储在变量中、作为参数传递给函数或作为函数返回值。
 |数据类型|描述|
 |:--|:--|
-|nil|表示空值或无效值|
+|nil|表示空值或无效值类型，仅包含一个值：nil|
 |boolean|表示布尔类型，包含两个值：true与false|
 |int|表示整数类型|
 |double|表示双精度实浮点数|
@@ -147,7 +147,7 @@ print(type({
 ``` Java
 nil
 boolean
-int 
+int
 double
 string
 function
@@ -162,32 +162,71 @@ bool <-> int <-> double
 
 
 ### **3.2 SpringScript变量**
-#### **变量声明与初始化**
-#### **变量赋值**
+#### **变量定义与初始化**
+SpringScript可用两种方式定义和初始化变量。  
+第一种方式使用var关键字定义变量。var关键字可一次定义多个变量，不同的变量用逗号分割。可在变量标识符后添加等号来对变量进行初始化，初始化是可选的，定义而未初始化的变量的初值均为nil。
+
 ``` Java
-a : 1 // 声明一个变量a，并将其值初始化为1
-PI : 3.14 // 声明一个常量PI，并将其值初始化为3.14
-a = 2 // 正确，a的值将会变为2
-PI = 3.14 // 错误，解释器将抛出：[Line4, Runtime error] A constant cannot be changed after initialization.
+var a // 此时，a的值为nil
+var b, c = true, d = "hello" // b的值为nil，c被初始化为布尔值true，d被初始化为字符串“hello”
+
+```
+另外，SpingScript还可以使用冒号，便捷地定义变量并初始化。下面的代码将定义了r和PI两个标识符，并将其分别初始化为1和3.14。注意，PI是一个常量。
+``` Java
+r : 1
+PI : 3.14
+
+```
+#### **变量赋值**
+赋值是改变变量的值的最基本方法，使用等号给变量赋予新值。前面提到，SpringScript是动态数据类型语言，变量本身是没有类型的，变量的类型取决于其值的类型。
+``` Java
+a : 1 // a被初始化为1，此时其数据类型为int
+a = false // a的数据类型变为boolean
+a = "spring" // a的数据类型变为string 
+a = func(x) -> x**2 // a的数据类型变为function。
+'''
+注意，上面的第四行代码展示了一种使用箭头（->）定义SpringScript函数的语法。
+这里读者看不懂也无所谓，本文后续的章节将会详细介绍如何定义一个SpringScript函数。
+'''
 ```
 #### **多变量赋值**
+SpringScript作为一门现代程序设计语言，支持多变量赋值。使用逗号间隔变量列表和值列表中的各元素，赋值语句会将等号右边表达式的值依次赋值给等号左边的变量。
+``` Java
+var a, b, c
+a, b, c = 0.1, true, "spring"
+print(a, b, c)
+
+```
+执行上面的代码，控制台将输出：
+``` Java
+0.1, true, "spring"
+```
+注意，使用多变量赋值语句时，需保证等号两侧的变量列表和值列表长度一致，否则解释器将抛出左值与右值个数不匹配的错误。例如，执行下面的代码，解释器将抛出：[Line2, Runtime error] The number of variables does not match: there are 3 left value(s) and 2 right value(s).
+``` Java
+var a, b, c
+a, b, c = 0.1, true
+
+```
+多变量赋值经常用来交换变量的值，或接受函数的多个返回值。
+``` Java
+var a = true, b = false
+a, b = b, a // 此时， a = false, b = true
+a, b = f() // 假设f是一个函数，且f具有两个返回值，此时，f的两个返回值将分别赋值于a和b
+
+```
 #### **变量作用域**
-
-### 数据类型
-#### 基本数据类型
-bool
-int
-double
-string
-function
-#### 引用类型
-list
-dictionary
-object
-
+同一个作用域内，同一个标识符不能重复定义，否则解释器将抛出变量重定义的错误。
 
 
 ## **SpringScript运算符**
+### **算术运算符**
+### **位运算符**
+### **逻辑运算符**
+### **比较运算符**
+### **长度运算符**
+### **new运算符**
+### **运算符优先级**
+### **隐式类型转换**
 
 ## **SpringScript语句**
 ## **import语句**
@@ -206,6 +245,14 @@ object
 循环下标
 列表作为下标
 ## **SpringScript函数**
+### **函数定义**
+三种定义方式
+（直接定义，lambda表达式定义，箭头函数）
+匿名函数
+函数默认参数
+### **函数返回值**
+
+
 ## **SpringScript面向对象**
 ### 定义一个对象
 ### new运算符
