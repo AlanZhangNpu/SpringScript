@@ -15,7 +15,7 @@ foo : {
 	bar0 : 1
 	bar1 : true
 
-    // 子类对象
+	// 子类对象
 	bar2 : {
 		baz : "hello"
 	}
@@ -34,7 +34,7 @@ foo : {
 		return this
 	}
 	
-    // 成员方法
+	// 成员方法
 	func print(){
 		print(this.bar0, this.bar1, this.bar2)
 	}
