@@ -10,29 +10,41 @@ SpringScript是一个面向对象的（基于原型链，与JavaScript类似）�
 语法说明文档正在写作中。
 
 ``` java
-Foo : {
-	// public attributes
+foo : {
+	// 属性
 	bar0 : 1
 	bar1 : true
-	bar2 : "string"
 
-	// constructor with default arguments
-	(b0 = 0, b1 = false, b2 = ""){
-		this.bar0 = b0
-		this.bar1 = b1
-		this.bar2 = b2
+    // 子类对象
+	bar2 : {
+		baz : "hello"
+	}
+
+	// 带默认参数的构造函数
+	(arg0, arg1 = false, arg2 = "string"){
+		this.bar0 = arg0
+		this.bar1 = arg1
+		this.bar2.baz = arg2
 		return this
 	}
 	
-	// operator overload
+	// 运算符重载
 	+ other{
 		this.bar0 += other.bar0
 		return this
 	}
+	
+    // 成员方法
+	func print(){
+		print(this.bar0, this.bar1, this.bar2)
+	}
 }
-f0 : new Foo(0, false, "abc")
-f1 : new Foo(1)
+f0 : new foo(1, false, "abc")
+f1 : new foo(2)
 f0 += f1
+f0.print()
+f1.print()
+
 ```
 
 ## SpringStudio
