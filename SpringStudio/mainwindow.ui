@@ -154,7 +154,7 @@ QMenu::separator{
   </widget>
   <widget class="QDockWidget" name="dockWidget_workspace">
    <property name="windowTitle">
-    <string>数据</string>
+    <string>变量监视</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>8</number>
@@ -191,7 +191,7 @@ QMenu::separator{
   </widget>
   <widget class="QDockWidget" name="dockWidget_output">
    <property name="windowTitle">
-    <string>程序输出</string>
+    <string>控制台</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>

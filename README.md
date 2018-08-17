@@ -10,6 +10,7 @@ SpringScript是一个面向对象的（基于原型链，与JavaScript类似）�
 语法说明文档正在写作中。
 
 ``` java
+// 一个SpringScript对象
 foo : {
 	// 属性
 	bar0 : 1
