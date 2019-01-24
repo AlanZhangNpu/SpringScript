@@ -34,7 +34,7 @@ namespace spr {
 
         std::filebuf fbIn;
         if (!fbIn.open(codeFilePath, std::ios::in)) {
-            SpringException error(SpringException::SPRING_ERROR_FAILED_TO_OPEN_FILE, "Failed to open file: " + codeFilePathStr);
+            SpringException error(SpringException::SPRING_ERROR_OTHER, "Failed to open file: " + codeFilePathStr);
             runtimeEnvironment.springIOHelper->onError(-1, error.toString());
             return;
         }
@@ -60,6 +60,11 @@ namespace spr {
     SpringSymbolTable *SpringInterpreter::getSymbolTable()
     {
         return runtimeEnvironment.symbolTable;
+    }
+
+    SpringRuntimeEnvironment *SpringInterpreter::getEnv()
+    {
+        return &runtimeEnvironment;
     }
 
     void SpringInterpreter::clear()

@@ -17,8 +17,8 @@ public:
 protected:
     void run();
 
-    std::string input(std::string tip = "");
-    void print(std::string msg);
+    void print(const std::string &msg);
+    std::string input(const std::string &tip = "");
     void clearOutput();
     void onError(int lineno, std::string msg);
     void onFinish();

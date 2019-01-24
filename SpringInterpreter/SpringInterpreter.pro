@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       -= core gui
-QT       += core
+#QT       += core
 
 TARGET = SpringInterpreter
 TEMPLATE = lib
@@ -45,7 +45,8 @@ SOURCES += Spring.cpp \
     lib/SpringStandardLibraryBuilder.cpp \
     lib/SpringStandardFunction.cpp \
     lib/SpringLibraryLoader.cpp \
-    SpringInterpreter.cpp
+    SpringInterpreter.cpp \
+    tool/CharEncoding.cpp
 
 unix {
     target.path = /usr/lib
@@ -53,8 +54,7 @@ unix {
 }
 
 CONFIG += c++11
-INCLUDEPATH += ./core/parser/includepath
-LIBS += -L./core/parser/lib/libfl.a
+
 
 INCLUDEPATH+= ../arma\include
 LIBS += -L../arma\lib_win64\blas.lib
@@ -91,4 +91,5 @@ HEADERS += \
     lib/SpringStandardLibraryBuilder.h \
     lib/SpringStandardFunction.h \
     lib/SpringLibraryLoader.h \
-    SpringInterpreter.h
+    SpringInterpreter.h \
+    tool/CharEncoding.h

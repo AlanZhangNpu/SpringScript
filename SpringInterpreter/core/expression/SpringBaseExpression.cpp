@@ -8,7 +8,7 @@ namespace spr{
 
     void SpringBaseExpression::set(SpringRuntimeEnvironment &, const SpringObjectPtr &)
     {
-        Spring::throwSyntaxErrorException("cannot assign to rvalue");
+        SpringException::throwSyntaxErrorException("cannot assign to rvalue");
     }
 
     bool SpringBaseExpression::isLeftValue()

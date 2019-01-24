@@ -15,17 +15,20 @@ namespace spr {
             return SpringBaseStatement::EXIT;
 
         try{
-            return evaluate(env);
+//            zzzz "SpringBaseStatement::evaluate";
+            auto r = evaluate(env);
+            env.ojbManager->collectGarbage(env.symbolTable);
+            return r;
         }
         catch(std::runtime_error &error)
         {
             std::string errorMsg = error.what();
-            Spring::throwRuntimeError(errorMsg, getRealLineNo());
+            SpringException::throwRuntimeError(errorMsg, getRealLineNo());
         }
         catch(std::logic_error &logicError)
         {
             std::string errorMsg = logicError.what();
-            Spring::throwLogicErrorException(errorMsg, getRealLineNo());
+            SpringException::throwRuntimeError(errorMsg, getRealLineNo());
         }
         return SpringBaseStatement::SpringStatementResultFlag::NORMAL;
     }
@@ -60,7 +63,7 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-        qDebug() << QString::fromStdString(str + "SpringBaseStatement") << getRealLineNo();
+//        qDebug() << QString::fromStdString(str + "SpringBaseStatement") << getRealLineNo();
     }
 
 }

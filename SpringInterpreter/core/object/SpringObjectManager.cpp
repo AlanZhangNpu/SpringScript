@@ -1,5 +1,7 @@
 #include "SpringObjectManager.h"
+
 #include <algorithm>
+
 #include "Spring.h"
 #include "SpringStandardType.h"
 #include "SpringSymbolTable.h"
@@ -94,7 +96,7 @@ namespace spr {
 
     SpringVoidPointerPtr SpringObjectManager::create(void *p, const std::string &className)
     {
-        auto obj = new SpringVoidPointer(p, className);
+        auto obj = new SpringAny(p, className);
         objHeap.push_back(obj);
         return obj;
     }
@@ -119,26 +121,24 @@ namespace spr {
 
     void SpringObjectManager::tempPrintAllObject()
     {
-        zzzz "tempPrintAllObject{";
-        for(auto i : objHeap)
-            zzzz QString::fromStdString(i->getPrintString());
-        zzzz "}";
+//        zzzz "tempPrintAllObject{";
+//        for(auto i : objHeap)
+//            zzzz QString::fromStdString(i->getPrintString());
+//        zzzz "}";
     }
 
     void SpringObjectManager::tempPrintUsefulObject(std::vector<SpringObjectPtr> u)
     {
-        zzzz "tempPrintUsefulObject{";
-        for(auto i : u)
-            zzzz QString::fromStdString(i->getPrintString());
-        zzzz "}";
+//        zzzz "tempPrintUsefulObject{";
+//        for(auto i : u)
+//            zzzz QString::fromStdString(i->getPrintString());
+//        zzzz "}";
     }
 
     int SpringObjectManager::collectGarbage(SpringSymbolTable* symbolTable)
     {
-        if(objHeap.size() < 100000)
-            return 0;
-
-//        qDebug() <<"垃圾回收" << objHeap.size();
+//        if(objHeap.size() < 100000)
+//            return 0;
 
         std::vector<SpringObjectPtr> usefulObjects;
         symbolTable->getAllPtrs(usefulObjects);
@@ -161,7 +161,6 @@ namespace spr {
                 }
             }
         }
-//        qDebug()<<"删除：" << garbageNum << objHeap.size();
         return garbageNum;
     }
 

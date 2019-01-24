@@ -20,23 +20,23 @@ namespace spr {
     class SpringList;
     class SpringStruct;
     class SpringFunction;
-    class SpringVoidPointer;
+    class SpringAny;
 
     class SpringIDListExpression;
     class SpringParagraph;
     class SpringRuntimeEnvironment;
 
-    typedef SpringObject*       SpringObjectPtr;
-    typedef SpringNil*          SpringNilPtr;
-    typedef SpringBool*         SpringBoolPtr;
-    typedef SpringInt*          SpringIntPtr;
-    typedef SpringDouble*       SpringDoublePtr;
-    typedef SpringString*       SpringStringPtr;
-    typedef SpringMatrix*       SpringMatrixPtr;
-    typedef SpringList*         SpringListPtr;
-    typedef SpringFunction*     SpringFunctionPtr;
-    typedef SpringStruct*       SpringStructPtr;
-    typedef SpringVoidPointer*  SpringVoidPointerPtr;
+    using SpringObjectPtr       = SpringObject*;
+    using SpringNilPtr          = SpringNil*;
+    using SpringBoolPtr         = SpringBool*;
+    using SpringIntPtr          = SpringInt*;
+    using SpringDoublePtr       = SpringDouble*;
+    using SpringStringPtr       = SpringString*;
+    using SpringMatrixPtr       = SpringMatrix*;
+    using SpringListPtr         = SpringList*;
+    using SpringFunctionPtr     = SpringFunction*;
+    using SpringStructPtr       = SpringStruct*;
+    using SpringVoidPointerPtr  = SpringAny*;
 
     class __declspec(dllexport) SpringObject
     {
@@ -72,10 +72,13 @@ namespace spr {
         std::string getTypeString();
 
         // type conversions
-        void unbox(bool &p);
-        void unbox(int &p);
-        void unbox(double &p);
-        void unbox(std::string &p);
+//        void unbox(bool &p);
+//        void unbox(int &p);
+//        void unbox(double &p);
+//        void unbox(std::string &p);
+
+        template<typename T>
+        void to(T &value);
 
         virtual bool                toBool();
         virtual int                 toInt();
@@ -119,7 +122,7 @@ namespace spr {
         virtual SpringObjectPtr newInstance(SpringRuntimeEnvironment &env);
         virtual SpringObjectPtr call(const std::vector<SpringObjectPtr> &, SpringRuntimeEnvironment &env);
 
-        virtual SpringObjectPtr getItem(const SpringObjectPtr &index, SpringRuntimeEnvironment &env);
+        virtual SpringObjectPtr getItem(const SpringObjectPtr &other, SpringRuntimeEnvironment &env);
         virtual void setItem(const SpringObjectPtr &index, const SpringObjectPtr &, SpringRuntimeEnvironment &);
         virtual void delItem(const SpringObjectPtr &index, SpringRuntimeEnvironment &);
 

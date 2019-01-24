@@ -3,6 +3,13 @@
 #include "Spring.h"
 #include "./core/expression/SpringExpression.h"
 
+#define SPR_THROW_UNKNOWN_OP1(x) SpringException::throwUnknownOperatorException(x, {this->getType()});\
+return env.ojbManager->create();
+
+#define SPR_THROW_UNKNOWN_OP2(x) SpringException::throwUnknownOperatorException(x, {this->getType(), other->getType()});\
+return env.ojbManager->create();
+
+
 namespace spr {
 
     SpringObject::SpringObject()
@@ -115,24 +122,38 @@ namespace spr {
     value related functions
     ***********************************************************************/
 
-    void SpringObject::unbox(bool &p)
-    {
-        p = toBool();
-    }
+//    void SpringObject::unbox(bool &p)
+//    {
+//        p = toBool();
+//    }
 
-    void SpringObject::unbox(int &p)
-    {
-        p = toInt();
-    }
+//    void SpringObject::unbox(int &p)
+//    {
+//        p = toInt();
+//    }
 
-    void SpringObject::unbox(double &p)
-    {
-        p = toDouble();
-    }
+//    void SpringObject::unbox(double &p)
+//    {
+//        p = toDouble();
+//    }
 
-    void SpringObject::unbox(std::string &p)
+//    void SpringObject::unbox(std::string &p)
+//    {
+//        p = toString();
+//    }
+
+    template<typename T>
+    void SpringObject::to(T &value)
     {
-        p = toString();
+        if(std::is_same<typename std::decay<T>::type, bool>::value){
+            value = toBool();
+        }else if(std::is_same<typename std::decay<T>::type, int>::value){
+            value = toInt();
+        }else if(std::is_same<typename std::decay<T>::type, double>::value){
+            value = toDouble();
+        }else if(std::is_same<typename std::decay<T>::type, std::string>::value){
+            value = toString();
+        }
     }
 
     /***********************************************************************
@@ -141,49 +162,49 @@ namespace spr {
 
     bool SpringObject::toBool()
     {
-        Spring::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to bool");
+        SpringException::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to bool");
         return 0;
     }
 
     int SpringObject::toInt()
     {
-        Spring::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to int");
+        SpringException::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to int");
         return 0;
     }
 
     double SpringObject::toDouble()
     {
-        Spring::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to float");
+        SpringException::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to float");
         return 0.0;
     }
 
     std::string SpringObject::toString()
     {
-        Spring::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to string");
+        SpringException::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to string");
         return std::string();
     }
 
     SpringListPtr SpringObject::toListPointer()
     {
-        Spring::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to list");
+        SpringException::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to list");
         return dynamic_cast<SpringList*>(this);
     }
 
     SpringFunctionPtr SpringObject::toFunctionPointer()
     {
-        Spring::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to function");
+        SpringException::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to function");
         return dynamic_cast<SpringFunction*>(this);
     }
 
     SpringStructPtr SpringObject::toStructPointer()
     {
-        Spring::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to object");
+        SpringException::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to object");
         return dynamic_cast<SpringStruct*>(this);
     }
 
     void *SpringObject::toPointer(const std::string &)
     {
-        Spring::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to pointer");
+        SpringException::throwRuntimeError("TypeError: unable to convert " + getTypeString() + " to pointer");
         return nullptr;
     }
 
@@ -193,146 +214,128 @@ namespace spr {
 
     SpringObjectPtr SpringObject::add(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("+", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("+")
     }
 
     SpringObjectPtr SpringObject::increment(SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("++", {this->getType()});
+        SpringException::throwUnknownOperatorException("++", {this->getType()});
         return env.ojbManager->create();
     }
 
     SpringObjectPtr SpringObject::subtract(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("-", {this->getType(), other->getType()});
+        SpringException::throwUnknownOperatorException("-", {this->getType(), other->getType()});
         return env.ojbManager->create();
     }
 
     SpringObjectPtr SpringObject::decrement(SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("--", {this->getType()});
+        SpringException::throwUnknownOperatorException("--", {this->getType()});
         return env.ojbManager->create();
     }
 
     SpringObjectPtr SpringObject::opposite(SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("-", {this->getType()});
+        SpringException::throwUnknownOperatorException("-", {this->getType()});
         return env.ojbManager->create();
     }
 
     SpringObjectPtr SpringObject::multiply(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("*", {this->getType(), other->getType()});
+        SpringException::throwUnknownOperatorException("*", {this->getType(), other->getType()});
         return env.ojbManager->create();
     }
 
     SpringObjectPtr SpringObject::power(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("**", {this->getType(), other->getType()});
+        SpringException::throwUnknownOperatorException("**", {this->getType(), other->getType()});
         return env.ojbManager->create();
     }
 
     SpringObjectPtr SpringObject::divide(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("/", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("/")
     }
 
     SpringObjectPtr SpringObject::mod(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("%", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("%")
     }
 
     SpringObjectPtr SpringObject::greater(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException(">", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2(">")
     }
 
     SpringObjectPtr SpringObject::greaterEqual(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException(">=", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2(">=")
     }
 
     SpringObjectPtr SpringObject::less(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("<", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("<")
     }
 
     SpringObjectPtr SpringObject::lessEqual(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("<=", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("<=")
     }
 
     SpringObjectPtr SpringObject::equal(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("==", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("==")
     }
 
     SpringObjectPtr SpringObject::notEqual(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("!=", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("!=")
     }
 
     SpringObjectPtr SpringObject::logicalAnd(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("&&", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("&&")
     }
 
     SpringObjectPtr SpringObject::logicalOr(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("||", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("||")
     }
 
     SpringObjectPtr SpringObject::logicalNot(SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("!", {this->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP1("!")
     }
 
     SpringObjectPtr SpringObject::bitwiseAnd(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("&", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("&")
     }
 
     SpringObjectPtr SpringObject::bitwiseOr(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("|", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("|")
     }
 
     SpringObjectPtr SpringObject::bitwiseXor(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("^", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("^")
     }
 
     SpringObjectPtr SpringObject::bitwiseComplement(SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("~", {this->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP1("~")
     }
 
     SpringObjectPtr SpringObject::bitwiseShiftLeft(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("<<", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("<<")
     }
 
     SpringObjectPtr SpringObject::bitwiseShiftRight(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException(">>", {this->getType(), other->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2(">>")
     }
 
     SpringObjectPtr SpringObject::size(SpringRuntimeEnvironment &env)
@@ -342,14 +345,12 @@ namespace spr {
 
     SpringObjectPtr SpringObject::newInstance(SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("new", {this->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP1("new")
     }
 
     SpringObjectPtr SpringObject::call(const std::vector<SpringObjectPtr> &, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("()", {this->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP1("()")
     }
 
     bool SpringObject::checkType(const std::vector<SpringObjectPtr> &args,
@@ -391,36 +392,35 @@ namespace spr {
         return getTypeString();
     }
 
-    SpringObjectPtr SpringObject::getItem(const SpringObjectPtr &index, SpringRuntimeEnvironment &env)
+    SpringObjectPtr SpringObject::getItem(const SpringObjectPtr &other, SpringRuntimeEnvironment &env)
     {
-        Spring::throwUnknownOperatorException("[]", {this->getType(), index->getType()});
-        return env.ojbManager->create();
+        SPR_THROW_UNKNOWN_OP2("[]")
     }
 
     void SpringObject::setItem(const SpringObjectPtr &index, const SpringObjectPtr &, SpringRuntimeEnvironment &)
     {
-        Spring::throwUnknownOperatorException("[]", {this->getType(), index->getType()});
+        SpringException::throwUnknownOperatorException("[]", {this->getType(), index->getType()});
     }
 
     void SpringObject::delItem(const SpringObjectPtr &index, SpringRuntimeEnvironment &)
     {
-        Spring::throwUnknownOperatorException("[]", {this->getType(), index->getType()});
+        SpringException::throwUnknownOperatorException("[]", {this->getType(), index->getType()});
     }
 
     SpringObjectPtr SpringObject::getAttribute(const std::string &key, SpringRuntimeEnvironment &env)
     {
-        Spring::throwNoAttributeException(key);
+        SpringException::throwNoAttributeException(key);
         return env.ojbManager->create();
     }
 
     void SpringObject::setAttribute(const std::string &key, const SpringObjectPtr &, SpringRuntimeEnvironment &)
     {
-        Spring::throwNoAttributeException(key);
+        SpringException::throwNoAttributeException(key);
     }
 
     void SpringObject::setPrototype(const SpringObjectPtr &, SpringRuntimeEnvironment &)
     {
-        Spring::throwUnknownOperatorException("->", {this->getType()});
+        SpringException::throwUnknownOperatorException("->", {this->getType()});
     }
 
 }

@@ -9,7 +9,7 @@ namespace spr{
     {}
 
     SpringException::SpringException(SpringException::SpringErrorType type,
-                                     std::string msg,
+                                     const std::string &msg,
                                      int lineNo):
         errorType(type),
         errorMsg(msg),
@@ -30,10 +30,6 @@ namespace spr{
     {
         std::string strErrorType = "";
         switch (errorType) {
-        case SPRING_ERROR_FAILED_TO_OPEN_FILE:
-            strErrorType = "File error";
-            break;
-
         case SPRING_ERROR_LEXICAL_ERROR:
             strErrorType = "Lexical error";
             break;
@@ -44,18 +40,6 @@ namespace spr{
 
         case SPRING_RUNTIME_ERROR:
             strErrorType = "Runtime error";
-            break;
-
-        case SPRING_LOGIC_ERROR:
-            strErrorType = "Logic error";
-            break;
-
-        case SPRING_ACTIVE_TERMINATION:
-            strErrorType = "Active termination";
-            break;
-
-        case SPRING_TYPE_ERROR:
-            strErrorType = "TypeError";
             break;
 
         case SPRING_ERROR_OTHER:
@@ -81,4 +65,47 @@ namespace spr{
         errorLineNo = l;
     }
 
+    /***********************************************************************
+    static functions
+    ***********************************************************************/
+
+    void SpringException::throwRawException(std::string msg)
+    {
+        throw std::runtime_error(msg);
+    }
+
+    void SpringException::throwSyntaxErrorException(std::string msg)
+    {
+        throw SpringException(SpringException::SPRING_ERROR_SYNTAX_ERROR, msg);
+    }
+
+    void SpringException::throwRuntimeError(std::string msg, int lineNo)
+    {
+        throw SpringException(SpringException::SPRING_RUNTIME_ERROR, msg, lineNo);
+    }
+
+    void SpringException::throwUnknownOperatorException(const std::string &op,
+                                               const std::vector<SpringObject::SpringObjectType> &argList)
+    {
+        std::string k = "(";
+        for(unsigned i = 0; i < argList.size(); i++)
+        {
+            k += SpringObject::typeToString(argList[i]);
+            if(i != argList.size() - 1)
+                k += ",";
+            else
+                k += ")";
+        }
+        SpringException::throwRawException("Undefined operator " + op + " on " + k);
+    }
+
+    void SpringException::throwTypeErrorException(const std::string &targetType, const std::string &sourceType)
+    {
+        throw SpringException(SpringException::SPRING_RUNTIME_ERROR, "cannot assign " + sourceType + " to " + targetType);
+    }
+
+    void SpringException::throwNoAttributeException(const std::string &key)
+    {
+        SpringException::throwRawException("Undefined member named \"" + key + "\"");
+    }
 }

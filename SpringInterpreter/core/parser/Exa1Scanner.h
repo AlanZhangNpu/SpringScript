@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+
+#include "Spring.h"
 #include "Exa1.tab.hh"
 
 typedef Exa1::Exa1Parser::token TOKENS;
@@ -18,13 +20,15 @@ namespace Exa1 {
         Exa1Scanner() : Exa1FlexLexer(0, 0) {
         }
         virtual ~Exa1Scanner() {}
-		virtual int yylex(Exa1::Exa1Parser::semantic_type *lval) {
+        virtual int yylex(Exa1::Exa1Parser::semantic_type *lval, Exa1::Exa1Parser::location_type *location) {
 			yylval = lval;
+            yylloc = location;
 			return yylex();
 		}
 
 	private:
         virtual int yylex();
-		Exa1::Exa1Parser::semantic_type *yylval;
+        Exa1::Exa1Parser::semantic_type *yylval;
+        Exa1::Exa1Parser::location_type *yylloc;
 	};
 }

@@ -19,28 +19,27 @@ namespace spr {
         SpringObjectManager();
         ~SpringObjectManager();
 
-        SpringNilPtr        create();
-        SpringBoolPtr       create(const bool &b);
-        SpringIntPtr        create(const unsigned &i);
-        SpringIntPtr        create(const int &i);
-        SpringDoublePtr     create(const double &d);
-        SpringStringPtr     create(const std::string &s);
-
-        SpringListPtr       createEmptyList();
-        SpringListPtr       create(const std::vector<SpringObjectPtr> &l);
-        SpringFunctionPtr   create(SpringIDListExpression *i, SpringParagraph *b);
-        SpringFunctionPtr   create(const SpringStandardFunctionType &f, const std::string &d);
-        SpringStructPtr     createEmptyObject();
-        SpringStructPtr     create(const std::map<std::string, SpringObjectPtr> &m);
+        SpringNilPtr            create();
+        SpringBoolPtr           create(const bool &b);
+        SpringIntPtr            create(const unsigned &i);
+        SpringIntPtr            create(const int &i);
+        SpringDoublePtr         create(const double &d);
+        SpringStringPtr         create(const std::string &s);
+        SpringListPtr           create(const std::vector<SpringObjectPtr> &l);
+        SpringFunctionPtr       create(SpringIDListExpression *i, SpringParagraph *b);
+        SpringFunctionPtr       create(const SpringStandardFunctionType &f, const std::string &d);
+        SpringStructPtr         create(const std::map<std::string, SpringObjectPtr> &m);
         SpringVoidPointerPtr    create(void* p, const std::string &className);
+        SpringListPtr           createEmptyList();
+        SpringStructPtr         createEmptyObject();
 
         void push(const SpringObjectPtr & p);
 
-        int collectGarbage(SpringSymbolTable* symbolTable);
-        int collectGarbage2(const std::set<SpringObjectPtr> &usefulObjects);
-
         void pushReturnValue(const SpringObjectPtr &r);
         SpringObjectPtr popReturnValue();
+
+        int collectGarbage(SpringSymbolTable* symbolTable);
+        int collectGarbage2(const std::set<SpringObjectPtr> &usefulObjects);
 
     private:
         SpringNil sprNil;

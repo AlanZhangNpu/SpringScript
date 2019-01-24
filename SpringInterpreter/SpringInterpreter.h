@@ -16,6 +16,7 @@ namespace spr {
         virtual void interprete(const char *codeFilePath) override;
         virtual SpringObjectPtr getValue(const std::string &name) override;
         virtual SpringSymbolTable* getSymbolTable() override;
+        virtual SpringRuntimeEnvironment* getEnv() override;
         virtual void clear() override;
 
     private:

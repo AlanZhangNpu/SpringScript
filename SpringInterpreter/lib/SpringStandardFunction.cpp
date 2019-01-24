@@ -56,8 +56,17 @@ BASIC
 
     SpringObjectPtr input(const std::vector<SpringObjectPtr> &args, SpringRuntimeEnvironment &env)
     {
+        if(args.size() > 1)
+            SpringException::throwRuntimeError("Too many arguments");
 
-        return env.ojbManager->create();
+        if(args.size() == 1){
+            SpringObjectPtr arg = args[0];
+            auto in = env.springIOHelper->input(arg->toString());
+            return env.ojbManager->create(in);
+        }
+
+        auto in = env.springIOHelper->input();
+        return env.ojbManager->create(in);
     }
 
     SpringObjectPtr clear(const std::vector<SpringObjectPtr> &args, SpringRuntimeEnvironment &env)
@@ -111,24 +120,24 @@ BASIC
 
     SpringObjectPtr os_time(const std::vector<SpringObjectPtr> &, SpringRuntimeEnvironment &env)
     {
-        Spring::throwRawException("TODO: os_time()");
+        SpringException::throwRawException("TODO: os_time()");
         return env.ojbManager->create();
     }
 
     SpringObjectPtr os_getenv(const std::vector<SpringObjectPtr> &args, SpringRuntimeEnvironment &env)
     {
-        Spring::throwRawException("TODO: os_getenv()");
+        SpringException::throwRawException("TODO: os_getenv()");
         return env.ojbManager->create();
     }
 
     SpringObjectPtr os_system(const std::vector<SpringObjectPtr> &args, SpringRuntimeEnvironment &env)
     {
         if(args.size() != 1)
-            Spring::throwRawException("system函数接收1个字符串类型参数，即命令字符串");
+            SpringException::throwRawException("system函数接收1个字符串类型参数，即命令字符串");
 
         SpringObjectPtr a = args[0];
         if(!a->isString())
-            Spring::throwRawException("system函数的参数必须为字符串类型");
+            SpringException::throwRawException("system函数的参数必须为字符串类型");
 
         int code = system(a->toString().data());
         return env.ojbManager->create(code);

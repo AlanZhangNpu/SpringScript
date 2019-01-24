@@ -140,22 +140,22 @@ testBuildinFunctions : func(){
 };
 testBuildinFunctions();
 
-class Foo{
-	// public attributes
-	bar0 : 1
-	bar1 : true
-	bar2 : "string"
+class Foo{
+	// public attributes
+	bar0 : 1
+	bar1 : true
+	bar2 : "string"
 	
 	// constructor
-	(b1, b2, b3){
-		this.bar0 = b1
-		this.bar1 = b2
-		this.bar2 = b3
+	(b1, b2, b3){
+		this.bar0 = b1
+		this.bar1 = b2
+		this.bar2 = b3
 		return this
 	}
 	
 	// operator overload
-	+ other{
+	+ other{
 		this.bar0 += other.bar0
 		return this
 	}
@@ -272,7 +272,7 @@ class Foo{
 		return 1
 	}
 }
-print("运算符重载")
+print("运算符重载")
 Foo(2, false, "asdf")
 Foo + 1
 Foo - 1

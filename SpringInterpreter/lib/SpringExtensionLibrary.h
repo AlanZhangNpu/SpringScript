@@ -10,7 +10,7 @@
 
 namespace spr {
 
-    typedef std::function<SpringObjectPtr(const std::vector<SpringObjectPtr> &)> SpringExtensionFunctionType;
+    using SpringExtensionFunctionType = std::function<SpringObjectPtr(const std::vector<SpringObjectPtr> &)>;
 
     class __declspec(dllexport) SpringExtensionLibrary
     {

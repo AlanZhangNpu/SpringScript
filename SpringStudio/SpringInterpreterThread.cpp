@@ -61,7 +61,7 @@ void SpringInterpreterThread::onError(int lineno, std::string msg)
                               Q_ARG(std::string, msg));
 }
 
-void SpringInterpreterThread::print(std::string msg)
+void SpringInterpreterThread::print(const std::string &msg)
 {
     QString qMsg = QString::fromStdString(msg);
     QMetaObject::invokeMethod(pointer,"onPrint",
@@ -74,7 +74,7 @@ void SpringInterpreterThread::clearOutput()
                               Qt::AutoConnection);
 }
 
-std::string SpringInterpreterThread::input(std::string tip)
+std::string SpringInterpreterThread::input(const std::string &tip)
 {
     std::string inputStr = "";
     QMetaObject::invokeMethod(pointer,"input",

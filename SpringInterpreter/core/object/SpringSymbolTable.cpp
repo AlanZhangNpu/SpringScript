@@ -25,7 +25,7 @@ namespace spr {
 
         auto iter = symbolTable.rbegin();
         if(iter->count(key) != 0)
-            Spring::throwRawException("Variable redefinition: " + key);
+            SpringException::throwRawException("Variable redefinition: " + key);
 
         iter->insert(std::make_pair(key, p));
 
@@ -41,14 +41,14 @@ namespace spr {
             auto mapIter = iter->find(key);
             if(mapIter != iter->end()){
                 if(std::isupper(key[0]))
-                    Spring::throwRawException("A constant cannot be changed after initialization.");
+                    SpringException::throwRawException("A constant cannot be changed after initialization.");
                 mapIter->second = p;
 
                 time += (double)(clock())/(double)CLK_TCK - c;////////////**************
                 return;
             }
         }
-        Spring::throwRawException("Undefined symbol: " + key);
+        SpringException::throwRawException("Undefined symbol: " + key);
     }
 
     void SpringSymbolTable::clear()
@@ -70,7 +70,7 @@ namespace spr {
             if(mapIter != iter->end())
                 return mapIter->second;
         }
-        Spring::throwRuntimeError("Undefined variable " + key);
+        SpringException::throwRuntimeError("Undefined variable " + key);
         return nullptr;
     }
 
@@ -144,8 +144,10 @@ namespace spr {
     {
         for(auto iter = symbolTable.rbegin(); iter != symbolTable.rend(); iter++){
             for(auto sym : *iter){
-                zzzz QString::fromStdString(sym.first);
-                zzzz QString::fromStdString(sym.second->getPrintString());
+                std::cout << sym.first << ":    ";
+                std::cout << sym.second->getPrintString() << "\n\n";
+//                zzzz QString::fromStdString(sym.first);
+//                zzzz QString::fromStdString(sym.second->getPrintString());
             }
         }
     }

@@ -92,7 +92,7 @@ namespace spr {
     std::string SpringExtensionLibrary::getFunctionDescription(std::string funcName){
         auto it = exeFunctions.find(funcName);
         if(it == exeFunctions.end())
-            Spring::throwRawException("Undefined function: " + funcName);
+            SpringException::throwRawException("Undefined function: " + funcName);
         return it->second.funcDescription;
     }
 
@@ -100,7 +100,7 @@ namespace spr {
     {
         auto it = exeFunctions.find(funcName);
         if(it == exeFunctions.end())
-            Spring::throwRawException("Undefined function: " + funcName);
+            SpringException::throwRawException("Undefined function: " + funcName);
         return it->second.func(args);
     }
 

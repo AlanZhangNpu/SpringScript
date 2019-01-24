@@ -349,7 +349,7 @@ namespace spr {
     SpringVoidPointer
     ***********************************************************************/
 
-    class __declspec(dllexport) SpringVoidPointer : public SpringObject
+    class __declspec(dllexport) SpringAny : public SpringObject
     {
     public:
         virtual void* toPointer(const std::string &c) override;
@@ -358,7 +358,7 @@ namespace spr {
     private:
         void *ptr = nullptr;
         std::string className = "";
-        SpringVoidPointer(void *p, const std::string &c);
+        SpringAny(void *p, const std::string &c);
         friend class SpringObjectManager;
     };
 

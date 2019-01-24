@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setDockNestingEnabled(true);
 
     currentDir = QDir::currentPath();
-    currentDir = "E:\\Spring\\test_code/";
+    currentDir = "C:\\Users\\zhangyw\\QtProjects\\Spring\\test_code/";
     showFiles(currentDir);
 
     runtimeController = new SpringRuntimeController();
@@ -155,7 +155,6 @@ void MainWindow::initEditor()
     editor->setEolMode(QsciScintilla::EolWindows);
 
     connect(editor, SIGNAL(linesChanged()), this, SLOT(onLinesChanged()));
-    connect(editor, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
     connect(editor, SIGNAL(cursorPositionChanged(int,int)), this, SLOT(onCursorPositionChanged(int,int)));
     connect(editor, SIGNAL(marginClicked(int,int,Qt::KeyboardModifiers)), this, SLOT(onEditorMarginClicked(int,int,Qt::KeyboardModifiers)));
 }

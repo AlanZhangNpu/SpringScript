@@ -330,7 +330,7 @@ namespace Exa1 {
     if (yychar == yyempty_)
       {
 	YYCDEBUG << "Reading a token: ";
-	yychar = yylex (&yylval);
+	yychar = yylex (&yylval, &yylloc);
       }
 
 
@@ -414,17 +414,20 @@ namespace Exa1 {
 	  case 2:
 
     { 
+	
 		SpringParagraph* program = (yysemantic_stack_[(1) - (1)].paragraph);
-        //program->printStructure(0);
         try{
+//            std::cout <<"program->run(env)";
             program->run(env);
         }
         catch(SpringException &runtimeError)
         {
+//            std::cout <<"SpringException &runtimeError";
             env.springIOHelper->onError(runtimeError.getLineNo(), runtimeError.toString());
         }
         catch(std::exception &except)
         {
+//            std::cout <<"std::exception &except";
             std::string errorMsg = except.what();
             env.springIOHelper->onError(-1, errorMsg);
         }
@@ -449,7 +452,11 @@ namespace Exa1 {
 
   case 6:
 
-    { (yyval.stmt) = new SpringExpressionStatement((yysemantic_stack_[(2) - (1)].exp), (yysemantic_stack_[(2) - (2)].m_Int)); }
+    { (yyval.stmt) = new SpringExpressionStatement((yysemantic_stack_[(2) - (1)].exp), (yysemantic_stack_[(2) - (2)].m_Int));
+//        zzzz "tttt";
+        location_type loc = (yylocation_stack_[(2) - (1)]);
+//        zzzz loc.begin.line;
+    }
     break;
 
   case 7:
@@ -2267,18 +2274,18 @@ namespace Exa1 {
   const unsigned short int
   Exa1Parser::yyrline_[] =
   {
-         0,    92,    92,   110,   111,   112,   113,   115,   116,   117,
-     118,   119,   121,   122,   123,   124,   125,   128,   129,   130,
-     131,   132,   133,   134,   138,   141,   144,   147,   150,   153,
-     157,   160,   163,   166,   169,   172,   176,   179,   183,   186,
-     189,   192,   195,   200,   205,   210,   213,   218,   221,   224,
-     227,   230,   233,   238,   239,   242,   243,   246,   247,   250,
-     251,   252,   253,   256,   257,   258,   259,   260,   261,   263,
-     264,   265,   269,   274,   275,   276,   278,   279,   280,   282,
-     283,   284,   285,   288,   289,   290,   291,   292,   293,   294,
-     295,   298,   299,   300,   301,   302,   303,   304,   305,   306,
-     307,   308,   309,   310,   311,   312,   313,   314,   315,   316,
-     317,   320,   323,   324,   325,   326,   329,   330,   333,   334
+         0,    93,    93,   111,   112,   113,   114,   116,   117,   118,
+     119,   120,   122,   123,   124,   125,   126,   129,   130,   131,
+     132,   133,   134,   135,   139,   142,   145,   148,   151,   154,
+     158,   161,   164,   167,   170,   173,   177,   180,   184,   187,
+     190,   193,   196,   201,   206,   211,   214,   219,   222,   225,
+     228,   231,   234,   239,   240,   243,   244,   247,   248,   251,
+     252,   253,   254,   257,   258,   259,   260,   261,   262,   264,
+     265,   266,   270,   275,   276,   277,   279,   280,   281,   283,
+     284,   285,   286,   289,   290,   291,   292,   293,   294,   295,
+     296,   299,   300,   301,   302,   303,   304,   305,   306,   307,
+     308,   309,   310,   311,   312,   313,   314,   315,   316,   317,
+     318,   321,   324,   325,   326,   327,   330,   331,   334,   335
   };
 
   // Print the state stack on the debug stream.
@@ -2372,12 +2379,30 @@ namespace Exa1 {
 } // Exa1
 
 
+
+
+
+
 // 必须自己定义一个错误处理函数
 void Exa1::Exa1Parser::error(const Exa1Parser::location_type &loc, const std::string &msg)
 {
-    throw SpringException(SpringException::SPRING_ERROR_SYNTAX_ERROR, "syntax error\nTODO: 这里要防止内存泄漏");
-}
+	    // FIXME: 这里存在内存泄漏的问题
+//    throw SpringException(SpringException::SPRING_ERROR_SYNTAX_ERROR, msg + "syntax error\nTODO: 这里要防止内存泄漏");
+//    zzzz "begin";
+////    zzzz QString::fromStdString(loc.begin.filename);
+//    zzzz loc.begin.line;
+//    zzzz loc.begin.column;
 
+//    zzzz "end";
+////    zzzz QString::fromStdString(*loc.end.filename);
+//    zzzz loc.end.line;
+//    zzzz loc.end.column;
+
+//    zzzz "error description:";
+//    zzzz QString::fromStdString(msg);
+
+    throw SpringException(SpringException::SPRING_ERROR_SYNTAX_ERROR, msg);
+}
 int yyerror(char *s)
 {
   fprintf(stderr, "error: %s\n", s);

@@ -44,12 +44,12 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-        qDebug() << QString::fromStdString(str + "{");
+//        qDebug() << QString::fromStdString(str + "{");
         blankNum++;
         for (SpringBaseStatement* stmt : stmtList)
             stmt->printStructure(blankNum);
         blankNum--;
-        qDebug() << QString::fromStdString(str + "}");
+//        qDebug() << QString::fromStdString(str + "}");
     }
 
     int SpringParagraph::getFirstStmtLineNo()

@@ -28,7 +28,7 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-        qDebug() << QString::fromStdString(str + "SpringImportStatement") << getRealLineNo();
+//        qDebug() << QString::fromStdString(str + "SpringImportStatement") << getRealLineNo();
     }
 
     SpringBaseStatement::SpringStatementResultFlag SpringImportStatement::evaluate(SpringRuntimeEnvironment &env)
@@ -71,7 +71,7 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-        qDebug() << QString::fromStdString(str + "SpringDeclarationStatement") << getRealLineNo();
+//        qDebug() << QString::fromStdString(str + "SpringDeclarationStatement") << getRealLineNo();
     }
 
     SpringBaseStatement::SpringStatementResultFlag SpringDeclarationStatement::evaluate(SpringRuntimeEnvironment &env)
@@ -99,7 +99,7 @@ namespace spr {
         std::vector<unsigned> rvalues;
         leftValueList->getRightValues(rvalues);
         if(rvalues.size() != 0)
-            Spring::throwSyntaxErrorException("cannot assign to rvalue.");
+            SpringException::throwSyntaxErrorException("cannot assign to rvalue.");
     }
 
     SpringAssignStatement::~SpringAssignStatement()
@@ -116,7 +116,7 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-        qDebug() << QString::fromStdString(str + "SpringAssignStatement") << getRealLineNo();
+//        qDebug() << QString::fromStdString(str + "SpringAssignStatement") << getRealLineNo();
     }
 
     SpringBaseStatement::SpringStatementResultFlag SpringAssignStatement::evaluate(SpringRuntimeEnvironment &env)
@@ -140,7 +140,7 @@ namespace spr {
                 break;
             rightNum = right->toListPointer()->getLength();
         }
-        Spring::throwRawException("The number of variables does not match: there are "
+        SpringException::throwRawException("The number of variables does not match: there are "
                                   + std::to_string(leftNum) + " left value(s) and "
                                   + std::to_string(rightNum) + " right value(s).");
         return SpringBaseStatement::SpringStatementResultFlag::NORMAL;
@@ -168,7 +168,7 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-        qDebug() << QString::fromStdString(str + "SpringExpressionStatement") << getRealLineNo();
+//        qDebug() << QString::fromStdString(str + "SpringExpressionStatement") << getRealLineNo();
     }
 
     SpringBaseStatement::SpringStatementResultFlag SpringExpressionStatement::evaluate(SpringRuntimeEnvironment &env)
@@ -208,11 +208,13 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-        qDebug() << QString::fromStdString(str + "SpringJumpStatement") << getRealLineNo();
+//        qDebug() << QString::fromStdString(str + "SpringJumpStatement") << getRealLineNo();
     }
 
     SpringBaseStatement::SpringStatementResultFlag SpringJumpStatement::evaluate(SpringRuntimeEnvironment &env)
     {
+//        zzzz "SpringJumpStatementaaa";
+
         SpringStatementResultFlag r = SpringBaseStatement::SpringStatementResultFlag::NORMAL;
         switch (type)
         {
@@ -371,7 +373,7 @@ namespace spr {
         {
             SpringObjectPtr listContent = list->evaluate(env);
             if (!listContent->isList())
-                Spring::throwLogicErrorException(listContent->getTypeString() + " is not iterable", getRealLineNo());
+                SpringException::throwRuntimeError(listContent->getTypeString() + " is not iterable", getRealLineNo());
 
             env.symbolTable->entryScope();
             auto ptrList = listContent->toListPointer()->getAll();
@@ -429,7 +431,7 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-        qDebug() << QString::fromStdString(str + "SpringControlFlowStatement") << getRealLineNo();
+//        qDebug() << QString::fromStdString(str + "SpringControlFlowStatement") << getRealLineNo();
     }
 
 }

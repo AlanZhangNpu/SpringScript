@@ -10,12 +10,12 @@
 
 #define binaryOperator(op) SpringObjectPtr operatorFunc = getMember(op); \
 if(!operatorFunc->isFunction()) \
-    Spring::throwUnknownOperatorException(op, {getType(), other->getType()}); \
+    SpringException::throwUnknownOperatorException(op, {getType(), other->getType()}); \
 return operatorFunc->call({other}, env);
 
 #define unaryOperator(op) SpringObjectPtr operatorFunc = getMember(op); \
 if(!operatorFunc->isFunction()) \
-    Spring::throwUnknownOperatorException(op, {getType()}); \
+    SpringException::throwUnknownOperatorException(op, {getType()}); \
 return operatorFunc->call({}, env);
 
 namespace spr {
@@ -66,7 +66,7 @@ namespace spr {
             return env.ojbManager->create(this->toDouble() + other->toDouble());
 
         default:
-            Spring::throwUnknownOperatorException("+", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException("+", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -93,7 +93,7 @@ namespace spr {
             return env.ojbManager->create(this->toDouble() - other->toDouble());
 
         default:
-            Spring::throwUnknownOperatorException("-", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException("-", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -115,7 +115,7 @@ namespace spr {
             return env.ojbManager->create(this->toDouble() * other->toDouble());
 
         default:
-            Spring::throwUnknownOperatorException("*", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException("*", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -146,7 +146,7 @@ namespace spr {
             return env.ojbManager->create(this->toDouble() / other->toDouble());
 
         default:
-            Spring::throwUnknownOperatorException("/", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException("/", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -160,7 +160,7 @@ namespace spr {
             return env.ojbManager->create(this->toInt() % other->toInt());
 
         default:
-            Spring::throwUnknownOperatorException("%", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException("%", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -175,7 +175,7 @@ namespace spr {
             return env.ojbManager->create(this->toDouble() > other->toDouble());
 
         default:
-            Spring::throwUnknownOperatorException(">", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException(">", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -190,7 +190,7 @@ namespace spr {
             return env.ojbManager->create(this->toDouble() >= other->toDouble());
 
         default:
-            Spring::throwUnknownOperatorException(">=", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException(">=", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -205,7 +205,7 @@ namespace spr {
             return env.ojbManager->create(this->toDouble() < other->toDouble());
 
         default:
-            Spring::throwUnknownOperatorException("<", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException("<", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -220,7 +220,7 @@ namespace spr {
             return env.ojbManager->create(this->toDouble() <= other->toDouble());
 
         default:
-            Spring::throwUnknownOperatorException("<=", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException("<=", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -235,7 +235,7 @@ namespace spr {
             return env.ojbManager->create(this->toDouble() == other->toDouble());
 
         default:
-            Spring::throwUnknownOperatorException("?=", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException("?=", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -250,7 +250,7 @@ namespace spr {
             return env.ojbManager->create(this->toDouble() != other->toDouble());
 
         default:
-            Spring::throwUnknownOperatorException("!=", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException("!=", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -265,7 +265,7 @@ namespace spr {
             return env.ojbManager->create(this->toBool() && other->toBool());
 
         default:
-            Spring::throwUnknownOperatorException("&&", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException("&&", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -280,7 +280,7 @@ namespace spr {
             return env.ojbManager->create(this->toBool() || other->toBool());
 
         default:
-            Spring::throwUnknownOperatorException("||", {this->getType(), other->getType()});
+            SpringException::throwUnknownOperatorException("||", {this->getType(), other->getType()});
             break;
         }
         return env.ojbManager->create();
@@ -905,7 +905,7 @@ namespace spr {
         if(other->isBool() || other->isInt()){
             int n = other->toInt();
             if(n < 0)
-                Spring::throwRawException("When a string is multiplied by an integer, the integer must be positive or 0.");
+                SpringException::throwRawException("When a string is multiplied by an integer, the integer must be positive or 0.");
 
             std::string str = this->toString();
             std::string resultStr = "";
@@ -978,7 +978,7 @@ namespace spr {
         if(!index->isInt())
             SpringObject::setItem(index, value, env);
 
-        Spring::throwRawException("TODO: string[int]");
+        SpringException::throwRawException("TODO: string[int]");
     }
 
     void SpringString::delItem(const SpringObjectPtr &index, SpringRuntimeEnvironment &env)
@@ -986,7 +986,8 @@ namespace spr {
         if(!index->isInt())
             SpringObject::delItem(index, env);
 
-        Spring::throwRawException("TODO: del string[int]");
+        // TODO:del string[int]
+        SpringException::throwRawException("TODO: del string[int]");
     }
 
     SpringObjectPtr SpringString::size(SpringRuntimeEnvironment &env)
@@ -1009,7 +1010,7 @@ namespace spr {
         try{
             return std::stoi(value);
         }catch(std::exception &){
-            Spring::throwRuntimeError("TypeError: unable to convert string \"" + value + "\" to int");
+            SpringException::throwRuntimeError("TypeError: unable to convert string \"" + value + "\" to int");
         }
         return 0;
     }
@@ -1019,7 +1020,7 @@ namespace spr {
         try{
             return std::stod(value);
         }catch(std::exception &){
-            Spring::throwRuntimeError("TypeError: unable to convert string \"" + value + "\" to int");
+            SpringException::throwRuntimeError("TypeError: unable to convert string \"" + value + "\" to int");
         }
         return 0.0;
     }
@@ -1185,7 +1186,7 @@ namespace spr {
         if(other->isBool() || other->isInt()){
             int n = other->toInt();
             if(n < 0)
-                Spring::throwRawException("When a list is multiplied by an integer, the integer must be positive or 0.");
+                SpringException::throwRawException("When a list is multiplied by an integer, the integer must be positive or 0.");
 
             auto sourseList = getAll();
             std::vector<SpringObjectPtr> resultList;
@@ -1366,9 +1367,9 @@ namespace spr {
         }
         int acturalArgNum = args.size();
         if(acturalArgNum < minArgNum)
-            throw std::logic_error("Too few arguments.");
+            SpringException::throwRuntimeError("Too few arguments.");
         if(acturalArgNum > maxArgNum)
-            throw std::logic_error("Too many arguments.");
+            SpringException::throwRuntimeError("Too many arguments.");
 
         env.symbolTable->entryScope();
         if(self != nullptr)
@@ -1386,7 +1387,9 @@ namespace spr {
         }
 
         if(body != nullptr){
+//            env.symbolTable->print();
             SpringBaseStatement::SpringStatementResultFlag r = body->run(env);
+//            std::cout << "\n***************************q\n";
             if(r == SpringBaseStatement::SpringStatementResultFlag::RETURN){
                 SpringObjectPtr r = env.ojbManager->popReturnValue();
                 env.symbolTable->exitScope();
@@ -1455,11 +1458,11 @@ namespace spr {
         if(it == members.end()){
             auto it2 = members.find(PROTOTYPE_KEY);
             if(it2 == members.end())
-                Spring::throwRuntimeError("There is no member named " + key + " in the object");
+                SpringException::throwRuntimeError("There is no member named " + key + " in the object");
 
             SpringObjectPtr proto = it2->second;
             if(!proto->isStruct())
-                Spring::throwRuntimeError("There is no member named " + key + " in the object");
+                SpringException::throwRuntimeError("There is no member named " + key + " in the object");
 
             m = proto->toStructPointer()->getMember(key);
         }
@@ -1491,7 +1494,7 @@ namespace spr {
             members.erase(it);
 
         if(key.compare(PROTOTYPE_KEY) == 0 && !(p->isStruct()))
-            Spring::throwRawException("The prototype must be a struct.");
+            SpringException::throwRawException("The prototype must be a struct.");
         members.insert(std::make_pair(key, p));
     }
 
@@ -1673,7 +1676,7 @@ namespace spr {
     {
         SpringObjectPtr operatorFunc = getMember("()");
         if(!operatorFunc->isFunction())
-            Spring::throwUnknownOperatorException("()", {getType()});
+            SpringException::throwUnknownOperatorException("()", {getType()});
         return operatorFunc->call(args, env);
     }
 
@@ -1684,7 +1687,7 @@ namespace spr {
             SpringObjectPtr other = env.ojbManager->create(key);
             SpringObjectPtr operatorFunc = getMember(op);
             if(!operatorFunc->isFunction())
-                Spring::throwUnknownOperatorException(op, {getType(), other->getType()});
+                SpringException::throwUnknownOperatorException(op, {getType(), other->getType()});
             return operatorFunc->call({other}, env);
         }
         return getMember(key);
@@ -1697,7 +1700,7 @@ namespace spr {
             members.erase(it);
 
         if(key.compare(PROTOTYPE_KEY) == 0 && !(other->isStruct()))
-            Spring::throwRawException("The prototype must be a struct.");
+            SpringException::throwRawException("The prototype must be a struct.");
         members.insert(std::make_pair(key, other));
     }
 
@@ -1726,22 +1729,22 @@ namespace spr {
     SpringVoidPointer
     ***********************************************************************/
 
-    SpringVoidPointer::SpringVoidPointer(void *p, const std::string &c):
+    SpringAny::SpringAny(void *p, const std::string &c):
         ptr(p),
         className(c)
     {
         type = SPR_POINTER;
     }
 
-    void *SpringVoidPointer::toPointer(const std::string &c)
+    void *SpringAny::toPointer(const std::string &c)
     {
         if(className == c)
             return ptr;
-        Spring::throwRuntimeError("TypeError: unable to convert pointer(" + className + ") to pointer(" + c + ")");
+        SpringException::throwRuntimeError("TypeError: unable to convert pointer(" + className + ") to pointer(" + c + ")");
         return nullptr;
     }
 
-    std::string SpringVoidPointer::getPrintString()
+    std::string SpringAny::getPrintString()
     {
         return "pointer(" + className + ")";
     }

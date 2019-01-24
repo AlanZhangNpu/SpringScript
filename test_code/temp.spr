@@ -14,5 +14,8 @@ for item in a {
 		break;
 	}
 	print(item);
-}
-print("afadfadf")
+}
+你好
+print("afadfadf")
+print("你好")
+

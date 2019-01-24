@@ -70,7 +70,7 @@ namespace spr{
     {
         auto it = exeFunctions.find(funcName);
         if(it == exeFunctions.end())
-            Spring::throwRawException("Undefined function: " + funcName);
+            SpringException::throwRawException("Undefined function: " + funcName);
         return it->second.func(args, runtimeEnvironment);
     }
 
@@ -96,7 +96,7 @@ namespace spr{
     {
         auto it = exeFunctions.find(funcName);
         if(it == exeFunctions.end())
-            Spring::throwRawException("Undefined function: " + funcName);
+            SpringException::throwRawException("Undefined function: " + funcName);
         return it->second.funcDescription;
     }
 

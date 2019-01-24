@@ -360,7 +360,7 @@ namespace spr {
         leftTree(l)
     {
         if(nodeType >= 102 && nodeType <= 105 && !(l->isLeftValue()))
-            Spring::throwSyntaxErrorException("cannot assign to rvalue.");
+            SpringException::throwSyntaxErrorException("cannot assign to rvalue.");
     }
 
     SpringOperatorExpression::SpringOperatorExpression(int t, SpringBaseExpression * l, SpringBaseExpression * r):
@@ -369,7 +369,7 @@ namespace spr {
         rightTree(r)
     {
         if(nodeType >= 219 && nodeType <= 229 && !(l->isLeftValue()))
-            Spring::throwSyntaxErrorException("cannot assign to rvalue.");
+            SpringException::throwSyntaxErrorException("cannot assign to rvalue.");
     }
 
     SpringOperatorExpression::SpringOperatorExpression(int t, SpringBaseExpression *l, SpringBaseExpression *m, SpringBaseExpression *r):
@@ -707,7 +707,7 @@ namespace spr {
             return rightTree->evaluate(env);
         }
         default:
-            Spring::throwRawException("Unknown operator " + std::to_string(nodeType));
+            SpringException::throwRawException("Unknown operator " + std::to_string(nodeType));
             break;
         }
 
