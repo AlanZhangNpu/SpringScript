@@ -49,7 +49,7 @@ f1.print()
 ```
 
 SpringScript同时支持中/英文关键字，对照表如下。
-![image](https://github.com/AlanZhangNpu/SpringScript/blob/master/screenshots/spring_studio0.png)
+![image](https://github.com/AlanZhangNpu/SpringScript/blob/master/screenshots/keywords.png)
 
 ## SpringStudio
 The SpringStudio is an Integrated Development Environment (IDE) of the SpringScript. Below are two screenshot of the SpringStudio. More documentation on SpringStudio is being written.
