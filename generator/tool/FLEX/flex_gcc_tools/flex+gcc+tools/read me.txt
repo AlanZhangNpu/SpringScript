@@ -1,0 +1,24 @@
+flex+gcc词法分析实验工具包
+
+关于
+
+这是一个用于flex+gcc进行词法分析实验的简易工具包。
+
+flex程序，来自sourceforge上gnuwin32项目Flex for Windows，下载地址 http://goo.gl/WQYnL。
+
+gcc程序，来自“代码至上”博客的博文《Windows命令行下的GCC编译器》，文章地址 http://goo.gl/Vb1Ok。文章的说明gcc提取自dev-cpp，可能库文件会有不全。
+
+启动文件start.bat，本人制作，作用是把flex和gcc所在bin目录添加到系统变量path中。（这个path只会在当前进程中有效，不会添加到实际的系统变量中，且当cmd窗口退出后path的设置失效）。
+
+测试文件sample.l，代码来自http://goo.gl/xYvme。使用方法略有区别，可参考下面的操作
+    生成：flex sample.l
+    命令执行后会生成一个c代码文件lex.yy.c
+    编译：gcc -g lex.yy.c -o sample
+    命令执行后会生成一个可执行文件sample.exe，会有一个warning可以忽略。
+    运行: sample
+    命令执行后换行，随便输入字母或数字，按回车会出现类型判断的提示，按Ctrl+Z结束输入，会进行类型统计，之后sample程序退出。
+
+使用方法，双击start.bat启动命令行，可按照与测试文件类似的方式使用。
+
+本工具包仅供用于学习，所有文件、程序的版权归原作者所有。
+欢迎访问我的博客 http://www.cnblogs.com/tt-0411
