@@ -47,8 +47,7 @@ BASIC
         }else{
             std::string output = "";
             for(auto c : args)
-                output += c->getPrintString() + " ";
-            output = output.substr(0, output.length() - 1);
+                output += c->getPrintString();
             env.springIOHelper->print(output);
         }
         return env.ojbManager->create();
@@ -195,6 +194,28 @@ MATH
     {
 
         return env.ojbManager->create();
+    }
+
+    SpringObjectPtr math_range(const std::vector<SpringObjectPtr> &args, SpringRuntimeEnvironment &env)
+    {
+        if(args.size() != 1)
+            SpringException::throwRawException("range函数的包含一个输入参数");
+
+        SpringObjectPtr p = args[0];
+        if(!p->isInt())
+            SpringException::throwRawException("range函数只接受一个整数类型的参数");
+
+        auto range = p->toInt();
+
+        if (range <= 0)
+            return env.ojbManager->createEmptyList();
+
+        std::vector<SpringObjectPtr> l;
+        for (unsigned int i = 0; i < range; i++) {
+            auto pointer = env.ojbManager->create(i);
+            l.push_back(pointer);
+        }
+        return env.ojbManager->create(l);
     }
 
 }

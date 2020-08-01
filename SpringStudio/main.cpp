@@ -12,8 +12,8 @@
 int main(int argc, char *argv[])
 {
     // 下面一行是为了检查内存泄漏
-    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    char *str = (char *)malloc(sizeof(char) * 10);
+//    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+//    char *str = (char *)malloc(sizeof(char) * 10);
 
     QApplication a(argc, argv);
 

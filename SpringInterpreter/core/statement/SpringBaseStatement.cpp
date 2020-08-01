@@ -15,9 +15,8 @@ namespace spr {
             return SpringBaseStatement::EXIT;
 
         try{
-//            zzzz "SpringBaseStatement::evaluate";
             auto r = evaluate(env);
-            env.ojbManager->collectGarbage(env.symbolTable);
+//            env.ojbManager->collectGarbage(env.symbolTable);
             return r;
         }
         catch(std::runtime_error &error)

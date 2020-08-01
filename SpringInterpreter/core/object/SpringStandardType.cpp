@@ -1465,8 +1465,10 @@ namespace spr {
                 SpringException::throwRuntimeError("There is no member named " + key + " in the object");
 
             m = proto->toStructPointer()->getMember(key);
+        }else {
+            m = it->second;
         }
-        m = it->second;
+
         if(m->isFunction())
             m->toFunctionPointer()->setSelf(this);
         return m;

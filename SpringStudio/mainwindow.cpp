@@ -15,6 +15,7 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QtCharts>
 #include <QInputDialog>
+#include <QCursor>
 
 #include <Qsci/qscilexerpython.h>
 #include <Qsci/qscilexercpp.h>
@@ -56,11 +57,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setDockNestingEnabled(true);
 
-    currentDir = QDir::currentPath();
-    currentDir = "C:\\Users\\zhangyw\\QtProjects\\Spring\\test_code/";
-    showFiles(currentDir);
-
     runtimeController = new SpringRuntimeController();
+
+//    currentDir = QDir::currentPath();
+//    currentDir = "C:\\Users\\zhangyw\\QtProjects\\Spring\\test_code/";
+//    showFiles(currentDir);
+
 }
 
 MainWindow::~MainWindow()
@@ -273,7 +275,7 @@ void MainWindow::onFinish()
 //    sendEmail(m);
 
     printMsg(QString("结束"), DEBUG_MSG);
-//    showWorkspace();
+    showWorkspace();
 
     programState = PROGRAM_STATE_EDIT;
     editor->setReadOnly(false);
@@ -490,6 +492,9 @@ void MainWindow::on_action_run_triggered()
         springInterpreter = Spring::getInstance();
         th = new SpringInterpreterThread(this, codePath, springInterpreter);
         springInterpreter->init(th, runtimeController);
+
+        loadMethods();
+
         QThreadPool::globalInstance()->start(th);
         break;
     }
@@ -522,6 +527,43 @@ void MainWindow::printMsg(QString msg, MainWindow::PrintMsgType t)
     QTextCursor cursor=ui->textEdit_output->textCursor();
     cursor.movePosition(QTextCursor::End);
     ui->textEdit_output->setTextCursor(cursor);
+}
+
+void MainWindow::loadMethods()
+{
+    springInterpreter->registerFunction("wait",
+                                        "等待一段时间",
+                                        [](const std::vector<SpringObjectPtr>& args, SpringRuntimeEnvironment& env) -> SpringObjectPtr{
+
+        SpringObjectPtr p1 = args[0];
+        int time = p1->toInt();
+
+        QTime t;
+        t.start();
+        while(t.elapsed()<time){
+            QCoreApplication::processEvents();
+        }
+
+        return env.ojbManager->create();
+    });
+
+    springInterpreter->registerFunction("moveCursor",
+                                        "移动鼠标的位置",
+                                        [](const std::vector<SpringObjectPtr>& args, SpringRuntimeEnvironment& env) -> SpringObjectPtr{
+        if (args.size() != 2)
+            SpringException::throwRawException("moveCursor函数的包含两个个输入参数");
+
+        SpringObjectPtr p1 = args[0];
+        SpringObjectPtr p2 = args[1];
+
+        if(!p1->isInt() || !p2->isInt())
+            SpringException::throwRawException("moveCursor函数包含两个整数类型的参数");
+
+        int x = p1->toInt();
+        int y = p2->toInt();
+        QCursor::setPos(x, y);
+        return env.ojbManager->create();
+    });
 }
 
 void MainWindow::onFileListDClicked(QModelIndex i)
@@ -663,7 +705,7 @@ void MainWindow::on_action_new_file_triggered()
 
 void MainWindow::on_action_clear_data_triggered()
 {
-//    showWorkspace();
+    workspaceView->clear();
 }
 
 void MainWindow::on_action_step_continue_triggered()
@@ -732,9 +774,4 @@ void MainWindow::input(std::string tip, std::string &inputStr)
                                   tr("输入对话框"),
                                   QString::fromStdString(tip));
     inputStr = text.toStdString();
-}
-
-void MainWindow::on_action_open_cmd_triggered()
-{
-//    ui->lineEdit_cmd->setFocus();
 }

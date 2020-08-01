@@ -38,8 +38,8 @@ namespace spr {
         void pushReturnValue(const SpringObjectPtr &r);
         SpringObjectPtr popReturnValue();
 
-        int collectGarbage(SpringSymbolTable* symbolTable);
-        int collectGarbage2(const std::set<SpringObjectPtr> &usefulObjects);
+        int collectGarbage(SpringSymbolTable* symbolTable, bool force = false);
+//        int collectGarbage2(const std::set<SpringObjectPtr> &usefulObjects);
 
     private:
         SpringNil sprNil;

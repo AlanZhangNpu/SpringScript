@@ -19,6 +19,7 @@ public:
     explicit WorkspaceView(QWidget *parent = 0);
     ~WorkspaceView();
 
+    void clear();
     void showWorkspace(spr::SpringSymbolTable *symbolTable);
     void showContainer(const std::string &symbol, spr::SpringObjectPtr &c);
 private slots:

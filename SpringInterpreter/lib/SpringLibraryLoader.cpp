@@ -40,16 +40,21 @@ namespace spr {
             obj->addMember("getenv", env.ojbManager->create(os_getenv, ""));
             obj->addMember("system", env.ojbManager->create(os_system, ""));
             env.symbolTable->declare(libName, obj);
+
         }else if(libName == "list")
         {
             auto obj = env.ojbManager->createEmptyObject();
             obj->addMember("sort", env.ojbManager->create(list_sort, ""));
             env.symbolTable->declare(libName, obj);
+
         }else if(libName == "math")
         {
             auto obj = env.ojbManager->createEmptyObject();
             obj->addMember("randu", env.ojbManager->create(math_randu, ""));
+            obj->addMember("range", env.ojbManager->create(math_range, ""));
+
             env.symbolTable->declare(libName, obj);
+
         }else{
             loadExtensionLib(libName, env);
         }

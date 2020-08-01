@@ -34,7 +34,7 @@ namespace spr {
             if(SpringBaseStatement::SpringStatementResultFlag::NORMAL != r)
                 return r;
         }
-//        env.ojbManager->collectGarbage(env.symbolTable);
+        env.ojbManager->collectGarbage(env.symbolTable);
         return SpringBaseStatement::SpringStatementResultFlag::NORMAL;
     }
 
@@ -44,12 +44,10 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-//        qDebug() << QString::fromStdString(str + "{");
         blankNum++;
         for (SpringBaseStatement* stmt : stmtList)
             stmt->printStructure(blankNum);
         blankNum--;
-//        qDebug() << QString::fromStdString(str + "}");
     }
 
     int SpringParagraph::getFirstStmtLineNo()

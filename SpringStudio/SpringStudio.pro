@@ -81,20 +81,37 @@ FORMS += \
 RESOURCES += \
     img.qrc
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../SpringInterpreter/release/ -lSpringInterpreter
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../SpringInterpreter/debug/ -lSpringInterpreter
-else:unix: LIBS += -L$$OUT_PWD/../SpringInterpreter/ -lSpringInterpreter
-
-INCLUDEPATH += $$PWD/../SpringInterpreter
-DEPENDPATH += $$PWD/../SpringInterpreter
 
 CONFIG += c++11
 
-CONFIG += qscintilla2
-Debug: LIBS += -llibqscintilla2d
-Release: LIBS += -llibqscintilla2
 
 INCLUDEPATH+= ../arma\include
 LIBS += -L../arma\lib_win64\blas.lib
         -L../arma\lib_win64\lapack.lib
         -L../arma\lib_win64\libf2c.lib
+
+
+
+# qscintilla2
+CONFIG += qscintilla2_qt5
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/Qsci_lib/ -lqscintilla2_qt5
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/Qsci_lib/ -lqscintilla2_qt5d
+
+INCLUDEPATH += $$PWD/Qsci_lib/
+DEPENDPATH += $$PWD/Qsci_lib/
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/Qsci_lib/libqscintilla2_qt5.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/Qsci_lib/libqscintilla2_qt5d.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/Qsci_lib/qscintilla2_qt5.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/Qsci_lib/qscintilla2_qt5d.lib
+
+
+
+
+# SpringInterpreter
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../SpringInterpreter/release/ -lSpringInterpreter
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../SpringInterpreter/debug/ -lSpringInterpreter
+
+INCLUDEPATH += $$PWD/../SpringInterpreter
+DEPENDPATH += $$PWD/../SpringInterpreter

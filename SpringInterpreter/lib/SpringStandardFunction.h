@@ -53,6 +53,8 @@ namespace spr {
     MATH
     ***********************************************************************/
 
+    SpringObjectPtr math_range(const std::vector<SpringObjectPtr> &args, SpringRuntimeEnvironment&env);
+
     SpringObjectPtr math_randu(const std::vector<SpringObjectPtr> &args, SpringRuntimeEnvironment&env);
     SpringObjectPtr math_randn(const std::vector<SpringObjectPtr> &args, SpringRuntimeEnvironment &env);
     SpringObjectPtr math_ones(const std::vector<SpringObjectPtr> &args, SpringRuntimeEnvironment &env);

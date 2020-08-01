@@ -26,6 +26,12 @@ WorkspaceView::~WorkspaceView()
     delete ui;
 }
 
+void WorkspaceView::clear()
+{
+    ui->tableWidget->setRowCount(0);
+
+}
+
 void WorkspaceView::onCellDoubleClicked(int row, int column)
 {
 //    auto symbol = ui->tableWidget->item(row, 0)->text().toStdString();

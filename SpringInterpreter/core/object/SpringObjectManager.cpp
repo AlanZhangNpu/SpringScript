@@ -135,10 +135,10 @@ namespace spr {
 //        zzzz "}";
     }
 
-    int SpringObjectManager::collectGarbage(SpringSymbolTable* symbolTable)
+    int SpringObjectManager::collectGarbage(SpringSymbolTable* symbolTable, bool force)
     {
-//        if(objHeap.size() < 100000)
-//            return 0;
+        if(!force && objHeap.size() < 100000)
+            return 0;
 
         std::vector<SpringObjectPtr> usefulObjects;
         symbolTable->getAllPtrs(usefulObjects);
@@ -164,31 +164,31 @@ namespace spr {
         return garbageNum;
     }
 
-    int SpringObjectManager::collectGarbage2(const std::set<SpringObjectPtr> &usefulObjects)
-    {
-//        if(objHeap.size() < 500)
-//            return 0;
+//    int SpringObjectManager::collectGarbage2(const std::set<SpringObjectPtr> &usefulObjects)
+//    {
+////        if(objHeap.size() < 500)
+////            return 0;
 
-        int garbageNum = 0;
-        auto iter = objHeap.begin();
-        while (iter != objHeap.end()) {
-            if(usefulObjects.count(*iter) != 0){
-                iter++;
-                continue;
-            }
+//        int garbageNum = 0;
+//        auto iter = objHeap.begin();
+//        while (iter != objHeap.end()) {
+//            if(usefulObjects.count(*iter) != 0){
+//                iter++;
+//                continue;
+//            }
 
-            auto findResult2 = std::find(returnValueStack.begin(), returnValueStack.end(), *iter);
-            if(findResult2 != returnValueStack.end()){
-                iter++;
-            }else{
-                delete *iter;
-                *iter = nullptr;
-                iter = objHeap.erase(iter);
-                garbageNum++;
-            }
-        }
-        return garbageNum;
-    }
+//            auto findResult2 = std::find(returnValueStack.begin(), returnValueStack.end(), *iter);
+//            if(findResult2 != returnValueStack.end()){
+//                iter++;
+//            }else{
+//                delete *iter;
+//                *iter = nullptr;
+//                iter = objHeap.erase(iter);
+//                garbageNum++;
+//            }
+//        }
+//        return garbageNum;
+//    }
 
     void SpringObjectManager::pushReturnValue(const SpringObjectPtr &r)
     {

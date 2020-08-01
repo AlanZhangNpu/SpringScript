@@ -1,0 +1,420 @@
+// SpringScript测试程序
+
+
+
+import os
+start : os.clock()
+clear()
+print("SpringScript Test Cases")
+
+
+// 常量
+PI : 3.1415927
+//PI = 3                	// 抛出错误：[Line11, Runtime error] A constant cannot be changed after initialization.
+
+
+
+print("***测试数组***")
+l1 : [0,1,2]
+l1[0] = "a"
+l1[1] = [2,3,4]
+print(l1)
+
+l1[1][0] = "sss"
+print(l1)
+
+
+
+print("***测试算术运算符***");
+a : 12 * (34 + 56/7) - 8.9;
+b : a**2;
+print("12 * (34 + 56/7) - 8.9=", a);
+print("(12 * (34 + 56/7) - 8.9)^2=", b);
+
+print("list operation");
+c : [1] * 5;
+print("c=", c);
+c[0] = 0;
+c[1] = "aaa";
+c[2] = c[2] * 2	;
+print("c=", c);
+
+print("string operation")
+d : "Hello"
+d = d + " world! "
+d = d * 2
+print("d =", d)
+
+
+
+print("***测试逻辑运算符***")
+print("true && true:", true && true);
+print("true && false:", true && false);
+print("false && true:", false && true);
+print("false && false:", false && false);
+
+print("true || true:", true || true);
+print("true || false:", true || false);
+print("false || true:", false || true);
+print("false || false:", false || false);
+
+print("! true:", ! true);
+print("! false:", ! false);
+
+print("true && true && true && true:", true && true && true && true);
+print("true && true && false && true:", true && true && false && true);
+print("true || false || true:", true || false || true);
+print("false || false || false:", false || false || false);
+print("! true || true:", ! true || true);
+print("! false && true || false && false:", ! false && true || false && false);
+
+
+
+print("***测试比较运算符***");
+testCompareOperation : func() {
+	print("1 > 2 :", 1 > 2);
+	print("1 < 2 :", 1 < 2);
+	print("1 >= 2 :",  1 >= 2);
+	print("1 <= 2 :",  1 <= 2);
+	print("1 : 1 :", 1 == 1);
+	print("1 : 2 :", 1 == 2);
+	print("1 != 2 :", 1 != 2);
+	print("2 != 2 :", 2 != 2);
+	return;
+};
+testCompareOperation();
+
+
+
+print("***测试三元运算符***");
+print(1<0 ? 12 : 1<10 ? "12" : "adfadsf")
+
+
+
+print("***测试赋值运算符***");
+a1 : 1
+a1 += 2; 			print(a1)
+a1 -= 2; 			print(a1)
+a1 *= 2; 			print(a1)
+a1 **= 2; 		print(a1)
+a1 /= 2; 			print(a1)
+a1 %= 2; 			print(a1)
+a1 &= 2; 			print(a1)
+a1 |= 2; 			print(a1)
+a1 ^= 1; 			print(a1)
+a1 <<= 2; 		print(a1)
+a1 >>= 2; 		print(a1)
+
+
+
+print("***测试流程控制语句***");
+testFlowStatement : func() {
+	loop 10{
+		print(1);
+	}
+	
+	a : 1;
+	b : 0;
+	if a > b {
+		if a > 1 {
+			print(2);
+		}else{
+			print(a);
+		}
+	}else{
+		print(b);
+	}
+	
+	// if 语句的语法糖
+	// 嵌套if
+	if true
+		if false
+			print(true)
+		else
+			print(false)
+	
+	a = [1,2,3,4,5] * 2;
+	for item in a {
+		if item <= 2 {
+			continue;
+		}
+		if item == 5 {
+			i : 0;
+			while i<5 {
+				print(i);
+				i = i+1;
+			}
+			break;
+		}
+		print(item);
+	}
+	for iii in a {
+		i1 : 0
+		print(++i1)
+	}
+	return;
+};
+testFlowStatement();
+
+
+
+print("***测试多返回值函数***")
+f1 : func(){
+	return 1,2,3
+}
+print(f1())
+
+
+
+print("***测试匿名函数***")
+func(){
+	it : 0
+	while it < 10 {
+		print(it)
+		it = it + 1
+	}
+}()
+
+
+
+print("***测试递归函数***");
+times : 0;
+testRecursiveFunction : func(x) {
+	x = x - 1;
+	if x > 0 {
+		times = times + 1;
+		print("recursion times = ", times);
+		testRecursiveFunction(x);
+	}else{
+		return;
+	}
+};
+testRecursiveFunction(10);
+
+
+
+print("***测试运算符重载***")
+class Foo{
+	// public attributes
+	bar0 : 1
+	bar1 : true
+	bar2 : "string"
+	
+	// constructor
+	(b1, b2, b3){
+		this.bar0 = b1
+		this.bar1 = b2
+		this.bar2 = b3
+		return this
+	}
+	
+	// operator overload
+	+ other{
+		this.bar0 += other.bar0
+		return this
+	}
+	- other {
+		print("-")
+		return this
+	}
+	-{
+		print("---")
+		return this
+	}
+	* other {
+		print("*")
+		return this
+	}
+	** other {
+		print("**")
+		return this
+	}
+	/ other {
+		print("/")
+		return 1
+	}
+	% other {
+		print("%")
+		return 1
+	}
+	++{
+		print("++")
+		return this;
+	}
+	--{
+		print("--")
+		return this;
+	}
+	
+	// 比较运算符重载*************************************************
+	> other {
+		print(">")
+		return 1
+	}
+	< other {
+		print("<")
+		return 1
+	}
+	>= other {
+		print(">=")
+		return 1
+	}
+	<= other {
+		print("<=")
+		return 1
+	}
+	== other {
+		print("==")
+		return 1
+	}
+	!= other {
+		print("!=")
+		return 1
+	}
+	
+	// 逻辑运算符重载*************************************************
+	&& other {
+		print("&&")
+		return 1
+	}
+	|| other {
+		print("||")
+		return 1
+	}
+	! {
+		print("!")
+		return 1
+	}
+	
+	// 位运算符重载*************************************************
+	& other {
+		print("&")
+		return 1
+	}
+	| other {
+		print("|")
+		return 1
+	}
+	^ other {
+		print("^")
+		return 1
+	}
+	~{
+		print("~")
+		return 1;
+	}
+	<< other {
+		print("<<")
+		return 1
+	}
+	>> other {
+		print(">>")
+		return 1
+	}
+	
+	// 其他运算符重载*************************************************
+	[other]{
+		print("[]")
+		return 1
+	}
+	#{
+		print("#")
+		return  232323;
+	}
+	. other{
+		print(".", other)
+		return 1
+	}
+}
+Foo(2, false, "asdf")
+h : new Foo
+-h
+h * 1
+h ** 1
+h / 1
+h % 1
+h++
+h--
+++h
+--h
+
+h > 1
+h < 1
+h >= 1
+h <= 1
+h == 1
+h != 1
+
+h && 1
+h || 1
+!h
+
+h.aaa
+h & 1
+h | 1
+h ^ 1
+~h
+h << 1
+h >> 1
+
+h[2]
+#h
+
+
+
+print("***测试深复制***")
+class Animal{
+	name : "foo"
+	(name){
+		this.name = name
+		print("Animal", Animal)
+		return this
+	}
+	func eat(x){
+		print(this.name, "eat", x)
+	}
+}
+cat : new Animal("mimi")
+cat.eat("mouse")
+
+
+
+print("***其他测试***")
+
+// #运算符
+list : [1,2,3]
+print(#list)
+
+
+// 多赋值语句
+b1 : 1
+b2 : 2
+b2, b1 = b1, b2		
+
+
+
+// 连续继承
+classA : {
+	a : 0
+}
+classB : {
+	a : 1
+}
+classC: {
+	a : true
+	b : [1,2,3]
+	c : func(){
+		print("ccc")
+	}
+}
+classA -> classB  -> classC 	
+
+
+// 高阶函数 与 lambda表达式
+func highOrderFunc(x0, f0){
+	return func(x) -> x0 + f0(x)
+}
+
+
+print("***测试结束***")
+print("time: ", os.clock() - start)

@@ -1,0 +1,65 @@
+// SpringScript示例代码：八皇后问题
+// 
+// 相关语法知识：
+//	数组的乘法运算符
+//	数组的布尔索引
+//	分支语句
+//	递归函数
+// 	os库函数
+// 	math库函数
+
+
+import os
+import math
+
+
+solutionId 	: 1
+nQueen 	: 8
+table 	: [0] * nQueen					// 数组的乘法运算
+ids 		: math.range(nQueen)
+startTime 	: os.clock()					// os库函数，统计程序运行时间
+
+
+// 打印棋盘函数
+printTable : func(table) {
+	print ("Solution ",  solutionId, ":")
+	solutionId++
+	
+	for colId in table {
+		row : ["☆"] * nQueen
+		row[colId] = "★"				// 这里的colId为布尔索引
+		print(row)
+	}
+	print ("")
+}
+
+
+// 按行递归搜索函数
+func searchRow(currentRowId) {
+	if currentRowId == nQueen {
+		printTable(table)
+		return
+	}
+	
+	for i in ids {
+		table[currentRowId] = i
+		attack : false
+		previouscurrentRowId : 0
+		while previouscurrentRowId < currentRowId {
+			if (table[currentRowId] == table[previouscurrentRowId]) || (currentRowId - previouscurrentRowId) == (table[currentRowId] - table[previouscurrentRowId]) || (currentRowId - previouscurrentRowId == table[previouscurrentRowId] - table[currentRowId]) {
+				attack = true
+				break
+			}
+			previouscurrentRowId = previouscurrentRowId + 1
+		}
+		
+		if !attack
+			searchRow(currentRowId + 1)
+	}
+}
+
+
+// 从第0行开始搜索
+searchRow(0)
+print("Elapsed time: ", os.clock() - startTime, " s")
+

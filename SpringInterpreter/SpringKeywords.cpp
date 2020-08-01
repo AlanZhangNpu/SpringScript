@@ -19,6 +19,7 @@ namespace spr{
         keywords.push_back("or");
         keywords.push_back("break");
         keywords.push_back("for");
+        keywords.push_back("in");
         keywords.push_back("pass");
         keywords.push_back("class");
         keywords.push_back("from");
@@ -27,6 +28,7 @@ namespace spr{
         keywords.push_back("global");
         keywords.push_back("def");
         keywords.push_back("if");
+        keywords.push_back("如果");
         keywords.push_back("return");
         keywords.push_back("del");
         keywords.push_back("import");

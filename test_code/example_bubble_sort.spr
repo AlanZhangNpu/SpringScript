@@ -1,0 +1,21 @@
+// SpringScript示例代码：冒泡排序
+// 
+// 相关语法知识：
+// 	数组的#运算符
+// 	多变量赋值运算符
+// 	if、for 语句
+// 	数学库函数
+
+
+import math
+
+list : [2.9, -700, 1, 5, 3, 9, 7, 4, 8, 12, 0, 7, -10]
+
+for i in math.range(#list - 1) {
+	for j in math.range(#list - i - 1) {
+		if list[j] > list[j+1]
+			list[j], list[j+1] = list[j+1], list[j]		// 交换变量顺序
+	}
+}
+
+print(list)

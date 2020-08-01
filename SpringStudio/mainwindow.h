@@ -30,6 +30,7 @@ public:
     void sendEmail(QString m);
 
     QString getUsedMemory(DWORD pid);
+
 private slots:
     void on_action_run_triggered();
     void on_actionOpen_triggered();
@@ -105,8 +106,6 @@ private slots:
 
     void input(std::string tip, std::string & inputStr);
 
-    void on_action_open_cmd_triggered();
-
 private:
 
     enum ProgramState{
@@ -152,6 +151,8 @@ private:
     void showWorkspace();
 
     void printMsg(QString msg, PrintMsgType t = PROGRAM_MSG);
+
+    void loadMethods();
 
 };
 

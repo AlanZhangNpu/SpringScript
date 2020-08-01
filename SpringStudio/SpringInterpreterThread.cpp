@@ -26,13 +26,12 @@ SpringInterpreterThread::~SpringInterpreterThread()
 
 void SpringInterpreterThread::run()
 {
-    int i=0;
-    while (i++ < 1) {
-        springInterpreter->interprete(codeFile.toStdString().c_str());
-        springInterpreter->clear();
-        delete springInterpreter;
-    }
+    springInterpreter->interprete(codeFile.toStdString().c_str());
+
     onFinish();
+
+    springInterpreter->clear();
+    delete springInterpreter;
 }
 
 void SpringInterpreterThread::onPause(int lineno)
@@ -50,7 +49,7 @@ void SpringInterpreterThread::onStop(int lineno)
 void SpringInterpreterThread::onFinish()
 {
     QMetaObject::invokeMethod(pointer,"onFinish",
-                              Qt::AutoConnection);
+                              Qt::BlockingQueuedConnection);
 }
 
 void SpringInterpreterThread::onError(int lineno, std::string msg)

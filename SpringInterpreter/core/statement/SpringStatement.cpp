@@ -28,7 +28,6 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-//        qDebug() << QString::fromStdString(str + "SpringImportStatement") << getRealLineNo();
     }
 
     SpringBaseStatement::SpringStatementResultFlag SpringImportStatement::evaluate(SpringRuntimeEnvironment &env)
@@ -71,7 +70,6 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-//        qDebug() << QString::fromStdString(str + "SpringDeclarationStatement") << getRealLineNo();
     }
 
     SpringBaseStatement::SpringStatementResultFlag SpringDeclarationStatement::evaluate(SpringRuntimeEnvironment &env)
@@ -116,7 +114,6 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-//        qDebug() << QString::fromStdString(str + "SpringAssignStatement") << getRealLineNo();
     }
 
     SpringBaseStatement::SpringStatementResultFlag SpringAssignStatement::evaluate(SpringRuntimeEnvironment &env)
@@ -168,7 +165,6 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-//        qDebug() << QString::fromStdString(str + "SpringExpressionStatement") << getRealLineNo();
     }
 
     SpringBaseStatement::SpringStatementResultFlag SpringExpressionStatement::evaluate(SpringRuntimeEnvironment &env)
@@ -208,13 +204,10 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-//        qDebug() << QString::fromStdString(str + "SpringJumpStatement") << getRealLineNo();
     }
 
     SpringBaseStatement::SpringStatementResultFlag SpringJumpStatement::evaluate(SpringRuntimeEnvironment &env)
     {
-//        zzzz "SpringJumpStatementaaa";
-
         SpringStatementResultFlag r = SpringBaseStatement::SpringStatementResultFlag::NORMAL;
         switch (type)
         {
@@ -431,7 +424,6 @@ namespace spr {
         std::string str = "";
         while (i++ < blankNum)
             str += "    ";
-//        qDebug() << QString::fromStdString(str + "SpringControlFlowStatement") << getRealLineNo();
     }
 
 }

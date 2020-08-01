@@ -1,0 +1,40 @@
+// SpringScript示例代码：快速排序
+// 
+// 相关语法知识：
+// 	#运算符
+// 	递归函数
+//	函数参数的引用传递
+
+
+list : [2.9, -700, 1, 5, 3, 9, 7, 4, 8, 12, 0, 7.5, -10]
+
+quick_sort : func(list, l, r) {
+	print(list)
+	
+	if l >= r
+		return
+	
+	i : l
+	j : r
+	k : list[i]
+	while i < j {
+		while i<j && list[j] >= k {
+			j--
+		}
+		if i<j
+			list[i++] = list[j]
+		
+		while i<j && list[i] <= k {
+			i++
+		}
+		if i<j
+			list[j--] = list[i]
+	}
+	list[i] = k
+	
+	quick_sort(list, l, i-1)
+	quick_sort(list, i+1, r)
+}
+
+quick_sort(list, 0, #list - 1)
+

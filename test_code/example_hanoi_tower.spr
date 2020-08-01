@@ -1,0 +1,21 @@
+// SpringScript示例代码：汉诺塔问题
+// 
+// 相关语法知识：
+//	全局变量
+//	递归函数
+
+
+step_id : 1				// 全局变量
+
+func move(n, a, b, c) {
+	if n == 1 	{
+		print("Step", step_id++, ": move Disk", n,  " from ", a, " to ", c)
+		return
+	}
+	
+	move(n-1, a, c, b)
+	print("Step", step_id++, ": move Disk", n,  " from ", a, " to ", c)
+	move(n-1, b, a, c)
+}
+
+move(3, "Tower1", "Tower2", "Tower3");
